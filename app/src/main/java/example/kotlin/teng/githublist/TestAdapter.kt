@@ -19,7 +19,7 @@ class TestAdapter internal constructor(
     @NonNull
     override fun onCreateViewHolder(@NonNull parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.setting_navigation_list_item, parent, false)
+            .inflate(R.layout.test_list_item, parent, false)
 
         return MyViewHolder(itemView)
     }
