@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import example.kotlin.teng.githublist.network.GithubUserItem
 
 class TestAdapter internal constructor(
-    private val navigationList: List<TestItem>) : RecyclerView.Adapter<TestAdapter.MyViewHolder>() {
+    private val githubUserListItem: List<GithubUserItem>?) :
+    RecyclerView.Adapter<TestAdapter.MyViewHolder>() {
 
     inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var title: TextView = view.findViewById(R.id.title)
@@ -25,11 +27,12 @@ class TestAdapter internal constructor(
     }
 
     override fun onBindViewHolder(@NonNull holder: MyViewHolder, position: Int) {
-        val item = navigationList[position]
-        holder.title.text = item.title
+        val item = githubUserListItem!![position]
+        holder.title.text = item.login
     }
 
     override fun getItemCount(): Int {
-        return navigationList.size
+        return githubUserListItem!!.size
     }
 }
+
