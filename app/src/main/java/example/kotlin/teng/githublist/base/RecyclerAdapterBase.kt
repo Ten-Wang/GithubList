@@ -11,12 +11,8 @@ abstract class RecyclerAdapterBase<T> protected constructor(dataList: MutableLis
     RecyclerView.Adapter<RecyclerView.ViewHolder>(), LoadMoreExecutor, RecyclerAdapterHelper.CustomizeSizeDelegate {
 
     private val recyclerAdapterHelper: RecyclerAdapterHelper = RecyclerAdapterHelper(dataList, this)
-    var headerView: View? = null
-        set(headerView) {
-            field = headerView
-            recyclerAdapterHelper.setHasHeaderView(headerView != null)
-        }
-    private var footerView: View? = null
+    private lateinit var headerView: View
+    private lateinit var footerView: View
     protected var dataList: List<T> = dataList
 
     override val dataSize: Int
@@ -86,19 +82,19 @@ abstract class RecyclerAdapterBase<T> protected constructor(dataList: MutableLis
         recyclerAdapterHelper.clearData()
     }
 
-    fun setFooterView(footerView: View?) {
+    fun setFooterView(footerView: View) {
         this.footerView = footerView
-        recyclerAdapterHelper.setHasFooterView(footerView != null)
+        recyclerAdapterHelper.setHasFooterView(true)
     }
 
     private fun onCreateHeaderViewHolder(inflater: LayoutInflater, parent: ViewGroup): RecyclerView.ViewHolder {
-        return object : ViewHolder(this.headerView!!) {
+        return object : ViewHolder(this.headerView) {
 
         }
     }
 
     protected fun onCreateFooterViewHolder(inflater: LayoutInflater, parent: ViewGroup): RecyclerView.ViewHolder {
-        return object : ViewHolder(footerView!!) {
+        return object : ViewHolder(footerView) {
 
         }
     }
@@ -106,14 +102,14 @@ abstract class RecyclerAdapterBase<T> protected constructor(dataList: MutableLis
     protected fun onBindLoadMoreViewHolder(viewHolder: RecyclerView.ViewHolder, isLoadMoreFailed: Boolean) {}
 
     protected fun onBindHeaderViewHolder(viewHolder: RecyclerView.ViewHolder) {
-        if (this.headerView!!.parent != null) {
-            (this.headerView!!.parent as ViewGroup).removeView(this.headerView)
+        if (this.headerView.parent != null) {
+            (this.headerView.parent as ViewGroup).removeView(this.headerView)
         }
     }
 
     protected fun onBindFooterViewHolder(viewHolder: RecyclerView.ViewHolder) {
-        if (footerView!!.parent != null) {
-            (footerView!!.parent as ViewGroup).removeView(footerView)
+        if (footerView.parent != null) {
+            (footerView.parent as ViewGroup).removeView(footerView)
         }
     }
 

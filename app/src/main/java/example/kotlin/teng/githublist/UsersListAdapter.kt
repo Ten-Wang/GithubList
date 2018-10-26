@@ -76,7 +76,12 @@ class UsersListAdapter internal constructor(
         internal fun bindData(list: List<GithubUserItem>, position: Int) {
             val item = list[position]
             textView_login.text = item.login
-            relative_badge.visibility = if (item.siteAdmin != null) View.VISIBLE else View.GONE
+            relative_badge.visibility =
+                    when (item.siteAdmin){
+                        true ->View.VISIBLE
+                        false->View.GONE
+                        null ->View.GONE
+                    }
 
             Glide.with(itemView.context)
                 .load(item.avatarUrl)

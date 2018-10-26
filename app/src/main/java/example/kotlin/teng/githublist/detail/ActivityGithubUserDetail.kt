@@ -49,7 +49,7 @@ class ActivityGithubUserDetail : AppCompatActivity() {
         textView_Bio = findViewById(R.id.textView_Bio)
         textView_location = findViewById(R.id.textView_location)
         textView_blog = findViewById(R.id.textView_blog)
-        textView_blog!!.autoLinkMask = Linkify.ALL
+        textView_blog.autoLinkMask = Linkify.ALL
         progress = findViewById(R.id.progressBar)
         img_avatar_url = findViewById(R.id.img_avatar_url)
         btn_close = findViewById(R.id.btn_close)
@@ -59,21 +59,21 @@ class ActivityGithubUserDetail : AppCompatActivity() {
     private fun setData() {
         Log.i(TAG, "setData")
         val login = intent.getStringExtra("login")
-        mGithubService!!.getUser(login).enqueue(object : Callback<GithubUserDetailItem> {
+        mGithubService.getUser(login).enqueue(object : Callback<GithubUserDetailItem> {
             override fun onResponse(
                 call: Call<GithubUserDetailItem>,
                 response: Response<GithubUserDetailItem>
             ) {
                 val item = response.body()
                 if (item != null) {
-                    textView_name!!.text = item.name
+                    textView_name.text = item.name
                     if (item.bio != null) {
-                        textView_Bio!!.text = item.bio!!.toString()
+                        textView_Bio.text = item.bio.toString()
                     }
-                    textView_login!!.text = item.login
-                    textView_location!!.text = item.location
-                    textView_blog!!.text = item.blog
-                    relative_badge!!.visibility = if (item.siteAdmin != null) View.VISIBLE else View.GONE
+                    textView_login.text = item.login
+                    textView_location.text = item.location
+                    textView_blog.text = item.blog
+                    relative_badge.visibility = if (item.siteAdmin != null) View.VISIBLE else View.GONE
 
                     Glide.with(applicationContext)
                         .load(item.avatarUrl)
@@ -82,7 +82,7 @@ class ActivityGithubUserDetail : AppCompatActivity() {
                                 e: GlideException?, model: Any,
                                 target: Target<Drawable>, isFirstResource: Boolean
                             ): Boolean {
-                                progress!!.visibility = View.GONE
+                                progress.visibility = View.GONE
                                 return false
                             }
 
@@ -90,11 +90,11 @@ class ActivityGithubUserDetail : AppCompatActivity() {
                                 resource: Drawable, model: Any,
                                 target: Target<Drawable>, dataSource: DataSource, isFirstResource: Boolean
                             ): Boolean {
-                                progress!!.visibility = View.GONE
+                                progress.visibility = View.GONE
                                 return false
                             }
                         })
-                        .into(img_avatar_url!!)
+                        .into(img_avatar_url)
                 } else {
                     Toast.makeText(application, "GitHub reject request!", Toast.LENGTH_SHORT).show()
                 }
@@ -104,7 +104,7 @@ class ActivityGithubUserDetail : AppCompatActivity() {
                 Toast.makeText(application, t.toString(), Toast.LENGTH_SHORT).show()
             }
         })
-        btn_close!!.setOnClickListener { v -> finish() }
+        btn_close.setOnClickListener { v -> finish() }
     }
 
     companion object {

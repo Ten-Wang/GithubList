@@ -63,12 +63,12 @@ class ActivityGithubUserList : AppCompatActivity(), GithubListPresenter.GLView,
     }
 
     override fun addUsersListRecyclerView(items: ArrayList<GithubUserItem>) {
-        val mUserItemAdapter = (userRecycler!!.adapter as UsersListAdapter?)!!
+        val mUserItemAdapter = (userRecycler.adapter as UsersListAdapter)
         mUserItemAdapter.addUserItems(items)
     }
 
     override fun onLoadMoreFailed() {
-        val mUserItemAdapter = (userRecycler!!.adapter as UsersListAdapter?)!!
+        val mUserItemAdapter = (userRecycler.adapter as UsersListAdapter)
         mUserItemAdapter.onLoadMoreFailed()
         onGitHubRejectRequest()
     }
@@ -83,7 +83,7 @@ class ActivityGithubUserList : AppCompatActivity(), GithubListPresenter.GLView,
 
     override fun onUserItemClick(position: Int) {
         Log.i(TAG, "onUserItemClick")
-        mGithubListPresenter!!.onUserItemClick(position)
+        mGithubListPresenter.onUserItemClick(position)
     }
 
     companion object {

@@ -51,7 +51,7 @@ class GithubListPresenter internal constructor(private val glView: GLView, priva
 
     fun onUserItemClick(position: Int) {
         Log.i(TAG, "onUserItemClick")
-        glView.onListItemClick(userList!![position])
+        glView.onListItemClick(userList[position])
     }
 
     fun onLoadMore() {
@@ -63,8 +63,8 @@ class GithubListPresenter internal constructor(private val glView: GLView, priva
                 Log.i(TAG, "onResponse")
                 if (response.body() != null) {
                     since += perPage
-                    val items = ArrayList(response.body()!!)
-                    userList!!.addAll(items)
+                    val items = ArrayList(response.body())
+                    userList.addAll(items)
                     glView.addUsersListRecyclerView(items)
                 } else {
                     glView.onGitHubRejectRequest()
