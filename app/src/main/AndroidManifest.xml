@@ -13,12 +13,16 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:fullBackupContent="@xml/backup_descriptor">
-        <activity android:name=".UserListActivity">
+        <activity android:name=".ActivityGithubUserList"
+                  android:label="@string/activity_github_users_list_title">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity android:name=".detail.ActivityGithubUserDetail"
+                  android:theme="@style/AppThemeNoActionBar"/>
     </application>
 </manifest>

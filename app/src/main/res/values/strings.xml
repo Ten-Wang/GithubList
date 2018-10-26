@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">GitHubList</string>
+    <string name="activity_github_users_list_title">GitHub Users</string>
+    <string name="activity_github_users_detail_name">name</string>
+    <string name="activity_github_users_detail_bio">Bio</string>
+    <string name="description_null">NULL</string>
+    <string name="activity_github_users_detail_login">Login</string>
+    <string name="activity_github_users_detail_staff"> STAFF </string>
+    <string name="activity_github_users_detail_location">Location</string>
+    <string name="activity_github_users_detail_blog">Blog</string>
+    <string name="item_user_list_header_test_view">Users</string>
 </resources>

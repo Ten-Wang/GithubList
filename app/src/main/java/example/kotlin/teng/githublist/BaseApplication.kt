@@ -7,9 +7,9 @@ import example.kotlin.teng.githublist.network.GithubServiceHelper
 
 class BaseApplication : Application() {
 
-    private var mGithubService: GithubService? = null
+    private lateinit var mGithubService: GithubService
 
-    val githubService: GithubService?
+    val githubService: GithubService
         get() {
             Log.i(TAG, "getGithubService")
             return mGithubService
