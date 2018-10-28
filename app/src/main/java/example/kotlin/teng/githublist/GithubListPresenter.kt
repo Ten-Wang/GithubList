@@ -29,10 +29,8 @@ class GithubListPresenter internal constructor(private val glView: GLView, priva
                 Log.i(TAG, "onResponse")
                 if (response.body() != null) {
                     since += perPage
-                    if(response.body() != null) {
-                        userList = ArrayList(response.body())
-                        glView.setUsersListRecyclerView(userList)
-                    }
+                    userList = ArrayList(response.body())
+                    glView.setUsersListRecyclerView(userList)
                 } else {
                     glView.onGitHubRejectRequest()
                 }
@@ -95,6 +93,6 @@ class GithubListPresenter internal constructor(private val glView: GLView, priva
     }
 
     companion object {
-        private val TAG = "GithubListPresenter"
+        private const val TAG = "GithubListPresenter"
     }
 }

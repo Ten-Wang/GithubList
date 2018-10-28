@@ -34,28 +34,24 @@ abstract class RecyclerAdapterBase<T> protected constructor(dataList: MutableLis
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: ViewHolder
-        if (recyclerAdapterHelper.isHeaderType(viewType)) {
-            vh = onCreateHeaderViewHolder(LayoutInflater.from(parent.context), parent)
-            vh.setIsRecyclable(false)
-        } else if (recyclerAdapterHelper.isLoadMoreType(viewType)) {
-            vh = onCreateLoadMoreViewHolder(LayoutInflater.from(parent.context), parent)
-        } else if (recyclerAdapterHelper.isFooterType(viewType)) {
-            vh = onCreateFooterViewHolder(LayoutInflater.from(parent.context), parent)
-        } else {
-            vh = onCreateItemViewHolder(LayoutInflater.from(parent.context), parent, viewType)
+        when {
+            recyclerAdapterHelper.isHeaderType(viewType) -> {
+                vh = onCreateHeaderViewHolder(LayoutInflater.from(parent.context), parent)
+                vh.setIsRecyclable(false)
+            }
+            recyclerAdapterHelper.isLoadMoreType(viewType) -> vh = onCreateLoadMoreViewHolder(LayoutInflater.from(parent.context), parent)
+            recyclerAdapterHelper.isFooterType(viewType) -> vh = onCreateFooterViewHolder(LayoutInflater.from(parent.context), parent)
+            else -> vh = onCreateItemViewHolder(LayoutInflater.from(parent.context), parent, viewType)
         }
         return vh
     }
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
-        if (recyclerAdapterHelper.isNormalItem(position)) {
-            onBindItemViewHolder(viewHolder, position - if (recyclerAdapterHelper.hasHeaderView()) 1 else 0)
-        } else if (recyclerAdapterHelper.checkToBindLoadMore(position)) {
-            onBindLoadMoreViewHolder(viewHolder, recyclerAdapterHelper.isLoadMoreFailed)
-        } else if (recyclerAdapterHelper.isHeaderItem(position)) {
-            onBindHeaderViewHolder(viewHolder)
-        } else if (recyclerAdapterHelper.isFooterItem(position)) {
-            onBindFooterViewHolder(viewHolder)
+        when {
+            recyclerAdapterHelper.isNormalItem(position) -> onBindItemViewHolder(viewHolder, position - if (recyclerAdapterHelper.hasHeaderView()) 1 else 0)
+            recyclerAdapterHelper.checkToBindLoadMore(position) -> onBindLoadMoreViewHolder(viewHolder, recyclerAdapterHelper.isLoadMoreFailed)
+            recyclerAdapterHelper.isHeaderItem(position) -> onBindHeaderViewHolder(viewHolder)
+            recyclerAdapterHelper.isFooterItem(position) -> onBindFooterViewHolder(viewHolder)
         }
     }
 
@@ -170,8 +166,7 @@ abstract class RecyclerAdapterBase<T> protected constructor(dataList: MutableLis
 
 
     companion object {
-
-        private val DEFAULT_LOAD_MORE_LAYOUT = R.layout.item_loadmore_default
+        private const val DEFAULT_LOAD_MORE_LAYOUT = R.layout.item_loadmore_default
     }
 
 }

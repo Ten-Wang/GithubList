@@ -13,53 +13,40 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import example.kotlin.teng.githublist.BaseApplication
-import example.kotlin.teng.githublist.network.GithubService
 import example.kotlin.teng.githublist.network.GithubUserDetailItem
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import example.kotlin.teng.githublist.R
+import kotlinx.android.synthetic.main.activity_github_users_detail.*
 
 class ActivityGithubUserDetail : AppCompatActivity() {
-    private lateinit var mGithubService: GithubService
-    private lateinit var textView_name: TextView
-    private lateinit var textView_Bio: TextView
-    private lateinit var textView_login: TextView
-    private lateinit var textView_location: TextView
-    private lateinit var textView_blog: TextView
-    private lateinit var progress: ProgressBar
-    private lateinit var img_avatar_url: ImageView
-    private lateinit var btn_close: Button
-    private lateinit var relative_badge: RelativeLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.i(TAG, "onCreate")
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_github_users_detail)
-        mGithubService = (application as BaseApplication).githubService
 
         initViews()
-        setData()
+
+        val login = intent.getStringExtra("login")
+        if(login != null){
+            setData(login)
+        }
     }
 
     private fun initViews() {
         Log.i(TAG, "initViews")
-        textView_name = findViewById(R.id.textView_name)
-        textView_login = findViewById(R.id.textView_login)
-        textView_Bio = findViewById(R.id.textView_Bio)
-        textView_location = findViewById(R.id.textView_location)
-        textView_blog = findViewById(R.id.textView_blog)
+
         textView_blog.autoLinkMask = Linkify.ALL
-        progress = findViewById(R.id.progressBar)
-        img_avatar_url = findViewById(R.id.img_avatar_url)
-        btn_close = findViewById(R.id.btn_close)
-        relative_badge = findViewById(R.id.relative_badge)
     }
 
-    private fun setData() {
+    private fun setData(login: String) {
         Log.i(TAG, "setData")
-        val login = intent.getStringExtra("login")
-        mGithubService.getUser(login).enqueue(object : Callback<GithubUserDetailItem> {
+
+        (applicationContext as BaseApplication).mGithubService.
+            getUser(login).enqueue(object : Callback<GithubUserDetailItem> {
             override fun onResponse(
                 call: Call<GithubUserDetailItem>,
                 response: Response<GithubUserDetailItem>
@@ -82,7 +69,7 @@ class ActivityGithubUserDetail : AppCompatActivity() {
                                 e: GlideException?, model: Any,
                                 target: Target<Drawable>, isFirstResource: Boolean
                             ): Boolean {
-                                progress.visibility = View.GONE
+                                progressBar.visibility = View.GONE
                                 return false
                             }
 
@@ -90,7 +77,7 @@ class ActivityGithubUserDetail : AppCompatActivity() {
                                 resource: Drawable, model: Any,
                                 target: Target<Drawable>, dataSource: DataSource, isFirstResource: Boolean
                             ): Boolean {
-                                progress.visibility = View.GONE
+                                progressBar.visibility = View.GONE
                                 return false
                             }
                         })
@@ -104,11 +91,11 @@ class ActivityGithubUserDetail : AppCompatActivity() {
                 Toast.makeText(application, t.toString(), Toast.LENGTH_SHORT).show()
             }
         })
-        btn_close.setOnClickListener { v -> finish() }
+
+        btn_close.setOnClickListener { finish() }
     }
 
     companion object {
-
-        private val TAG = "ActivityGUsersDetail"
+        private const val TAG = "ActivityGUsersDetail"
     }
 }

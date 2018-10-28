@@ -35,7 +35,8 @@ class UsersListAdapter internal constructor(
         parent: ViewGroup,
         viewType: Int
     ): RecyclerView.ViewHolder {
-        return UserViewHolder(inflater.inflate(R.layout.item_user_list, parent, false))
+        return UserViewHolder(
+            inflater.inflate(R.layout.item_user_list, parent, false))
     }
 
     override fun onBindItemViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
@@ -55,19 +56,14 @@ class UsersListAdapter internal constructor(
 
     private inner class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        private val textView_login: TextView
-        private val progress: ProgressBar
-        private val relative_badge: RelativeLayout
-        private val img_avatar_url: ImageView
-        private val contentLayout: View
+        private val textViewLogin: TextView = itemView.findViewById(R.id.textView_login)
+        private val progress: ProgressBar = itemView.findViewById(R.id.progressBar)
+        private val relativeBadge: RelativeLayout = itemView.findViewById(R.id.relative_badge)
+        private val imgAvatarUrl: ImageView = itemView.findViewById(R.id.img_avatar_url)
+        private val contentLayout: View = itemView.findViewById(R.id.item_user_content)
 
         init {
-            img_avatar_url = itemView.findViewById(R.id.img_avatar_url)
-            progress = itemView.findViewById(R.id.progressBar)
-            textView_login = itemView.findViewById(R.id.textView_login)
-            relative_badge = itemView.findViewById(R.id.relative_badge)
-            contentLayout = itemView.findViewById(R.id.item_user_content)
-            contentLayout.setOnClickListener { view ->
+            contentLayout.setOnClickListener { _ ->
                 selectedPosition = getItemPosition(this@UserViewHolder)
                 mListener.onUserItemClick(getItemPosition(this@UserViewHolder))
             }
@@ -75,8 +71,8 @@ class UsersListAdapter internal constructor(
 
         internal fun bindData(list: List<GithubUserItem>, position: Int) {
             val item = list[position]
-            textView_login.text = item.login
-            relative_badge.visibility =
+            textViewLogin.text = item.login
+            relativeBadge.visibility =
                     when (item.siteAdmin){
                         true ->View.VISIBLE
                         false->View.GONE
@@ -107,7 +103,7 @@ class UsersListAdapter internal constructor(
                         return false
                     }
                 })
-                .into(img_avatar_url)
+                .into(imgAvatarUrl)
         }
     }
 

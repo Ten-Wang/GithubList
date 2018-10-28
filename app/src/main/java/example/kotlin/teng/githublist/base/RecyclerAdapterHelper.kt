@@ -1,11 +1,14 @@
 package example.kotlin.teng.githublist.base
 
-class RecyclerAdapterHelper(private val dataList: MutableList<*>, private val sizeDelegate: CustomizeSizeDelegate) {
+class RecyclerAdapterHelper(
+    private val dataList: MutableList<*>,
+    private val sizeDelegate: CustomizeSizeDelegate
+    ) {
 
-    var isLoadMoreEnable = false
-    var isLoadMoreFailed = false
-    private var hasHeaderView = false
-    private var hasFooterView = false
+    var isLoadMoreEnable: Boolean = false
+    var isLoadMoreFailed: Boolean = false
+    private var hasHeaderView: Boolean = false
+    private var hasFooterView: Boolean = false
     private lateinit var loadMoreListener: LoadMoreExecutor.LoadMoreListener
 
     val adapterItemCount: Int
@@ -18,7 +21,7 @@ class RecyclerAdapterHelper(private val dataList: MutableList<*>, private val si
         get() = dataList.size
 
     fun setLoadMoreListener(loadMoreListener: LoadMoreExecutor.LoadMoreListener) {
-        this.setLoadMoreListener(loadMoreListener)
+        this.loadMoreListener = loadMoreListener
     }
 
     fun setHasHeaderView(hasHeaderView: Boolean) {
@@ -34,17 +37,12 @@ class RecyclerAdapterHelper(private val dataList: MutableList<*>, private val si
     }
 
     fun getItemType(position: Int): Int {
-        val itemType: Int
-        if (isHeaderItem(position)) {
-            itemType = VIEW_TYPE_HEADER
-        } else if (isLoadMoreItem(position)) {
-            itemType = VIEW_TYPE_LOAD_MORE
-        } else if (isFooterItem(position)) {
-            itemType = VIEW_TYPE_FOOTER
-        } else {
-            itemType = VIEW_TYPE_NORMAL
+        return when {
+            isHeaderItem(position) -> VIEW_TYPE_HEADER
+            isLoadMoreItem(position) -> VIEW_TYPE_LOAD_MORE
+            isFooterItem(position) -> VIEW_TYPE_FOOTER
+            else -> VIEW_TYPE_NORMAL
         }
-        return itemType
     }
 
     fun checkToBindLoadMore(position: Int): Boolean {
@@ -102,10 +100,9 @@ class RecyclerAdapterHelper(private val dataList: MutableList<*>, private val si
     }
 
     companion object {
-
-        val VIEW_TYPE_NORMAL = Integer.MAX_VALUE
-        private val VIEW_TYPE_LOAD_MORE = Integer.MAX_VALUE - 10
-        val VIEW_TYPE_HEADER = Integer.MAX_VALUE - 12
-        private val VIEW_TYPE_FOOTER = Integer.MAX_VALUE - 14
+        const val VIEW_TYPE_NORMAL = Integer.MAX_VALUE
+        private const val VIEW_TYPE_LOAD_MORE = Integer.MAX_VALUE - 10
+        const val VIEW_TYPE_HEADER = Integer.MAX_VALUE - 12
+        private const val VIEW_TYPE_FOOTER = Integer.MAX_VALUE - 14
     }
 }

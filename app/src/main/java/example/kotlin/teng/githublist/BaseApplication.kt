@@ -6,15 +6,7 @@ import example.kotlin.teng.githublist.network.GithubService
 import example.kotlin.teng.githublist.network.GithubServiceHelper
 
 class BaseApplication : Application() {
-
-    private lateinit var mGithubService: GithubService
-
-    val githubService: GithubService
-        get() {
-            Log.i(TAG, "getGithubService")
-            return mGithubService
-        }
-
+    lateinit var mGithubService: GithubService
     override fun onCreate() {
         Log.i(TAG, "onCreate")
         super.onCreate()
@@ -22,6 +14,6 @@ class BaseApplication : Application() {
     }
 
     companion object {
-        private val TAG = "BaseApplication"
+        private const val TAG = "BaseApplication"
     }
 }
