@@ -2,12 +2,11 @@ package example.kotlin.teng.githublist
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.widget.Toast
-import example.kotlin.teng.githublist.base.LoadMoreExecutor
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import example.kotlin.teng.githublist.detail.ActivityGithubUserDetail
 import example.kotlin.teng.githublist.network.GithubUserItem
 import kotlinx.android.synthetic.main.activity_github_user_list.*
@@ -33,8 +32,10 @@ class ActivityGithubUserList : AppCompatActivity(), GithubListPresenter.GLView,
         Log.i(TAG, "initViews")
 
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.addItemDecoration(DividerItemDecoration(
-            this, (recyclerView.layoutManager as LinearLayoutManager).orientation))
+        recyclerView.addItemDecoration(
+            DividerItemDecoration(
+            this, (recyclerView.layoutManager as LinearLayoutManager).orientation)
+        )
     }
 
     override fun onGitHubRejectRequest() {

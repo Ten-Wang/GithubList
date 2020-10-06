@@ -29,7 +29,7 @@ class GithubListPresenter internal constructor(private val glView: GLView, priva
                 Log.i(TAG, "onResponse")
                 if (response.body() != null) {
                     since += perPage
-                    userList = ArrayList(response.body())
+                    userList = ArrayList(response.body()!!)
                     glView.setUsersListRecyclerView(userList)
                 } else {
                     glView.onGitHubRejectRequest()
@@ -61,7 +61,7 @@ class GithubListPresenter internal constructor(private val glView: GLView, priva
                 Log.i(TAG, "onResponse")
                 if (response.body() != null) {
                     since += perPage
-                    val items = ArrayList(response.body())
+                    val items = ArrayList(response.body()!!)
                     userList.addAll(items)
                     glView.addUsersListRecyclerView(items)
                 } else {

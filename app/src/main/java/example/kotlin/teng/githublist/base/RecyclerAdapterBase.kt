@@ -1,10 +1,9 @@
 package example.kotlin.teng.githublist.base
 
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.RecyclerView.ViewHolder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import example.kotlin.teng.githublist.R
 
 abstract class RecyclerAdapterBase<T> protected constructor(dataList: MutableList<T>) :
@@ -33,7 +32,7 @@ abstract class RecyclerAdapterBase<T> protected constructor(dataList: MutableLis
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val vh: ViewHolder
+        val vh: RecyclerView.ViewHolder
         when {
             recyclerAdapterHelper.isHeaderType(viewType) -> {
                 vh = onCreateHeaderViewHolder(LayoutInflater.from(parent.context), parent)
@@ -67,7 +66,7 @@ abstract class RecyclerAdapterBase<T> protected constructor(dataList: MutableLis
         recyclerAdapterHelper.setLoadMoreListener(loadMoreListener)
     }
 
-    override fun onViewDetachedFromWindow(holder: ViewHolder) {
+    override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder) {
         super.onViewDetachedFromWindow(holder)
         if (recyclerAdapterHelper.isLoadMoreItem(holder.adapterPosition)) {
             recyclerAdapterHelper.isLoadMoreFailed = false
@@ -84,13 +83,13 @@ abstract class RecyclerAdapterBase<T> protected constructor(dataList: MutableLis
     }
 
     private fun onCreateHeaderViewHolder(inflater: LayoutInflater, parent: ViewGroup): RecyclerView.ViewHolder {
-        return object : ViewHolder(this.headerView) {
+        return object : RecyclerView.ViewHolder(this.headerView) {
 
         }
     }
 
     protected fun onCreateFooterViewHolder(inflater: LayoutInflater, parent: ViewGroup): RecyclerView.ViewHolder {
-        return object : ViewHolder(footerView) {
+        return object : RecyclerView.ViewHolder(footerView) {
 
         }
     }
@@ -117,13 +116,13 @@ abstract class RecyclerAdapterBase<T> protected constructor(dataList: MutableLis
         return recyclerAdapterHelper.hasFooterView()
     }
 
-    fun isHeaderViewHolder(vh: ViewHolder): Boolean {
+    fun isHeaderViewHolder(vh: RecyclerView.ViewHolder): Boolean {
         return recyclerAdapterHelper.isHeaderType(vh.itemViewType)
     }
 
     private fun onCreateLoadMoreViewHolder(from: LayoutInflater, parent: ViewGroup): RecyclerView.ViewHolder {
         return object :
-            ViewHolder(LayoutInflater.from(parent.context).inflate(DEFAULT_LOAD_MORE_LAYOUT, parent, false)) {
+            RecyclerView.ViewHolder(LayoutInflater.from(parent.context).inflate(DEFAULT_LOAD_MORE_LAYOUT, parent, false)) {
 
         }
     }
@@ -136,7 +135,7 @@ abstract class RecyclerAdapterBase<T> protected constructor(dataList: MutableLis
 
     protected abstract fun onBindItemViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int)
 
-    protected fun getItemPosition(viewHolder: ViewHolder): Int {
+    protected fun getItemPosition(viewHolder: RecyclerView.ViewHolder): Int {
         return viewHolder.layoutPosition - if (hasHeaderView()) 1 else 0
     }
 
