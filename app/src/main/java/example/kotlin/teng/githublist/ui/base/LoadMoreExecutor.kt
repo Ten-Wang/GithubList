@@ -1,4 +1,4 @@
-package example.kotlin.teng.githublist.base
+package example.kotlin.teng.githublist.ui.base
 
 interface LoadMoreExecutor {
     fun setLoadMoreEnable(isEnable: Boolean)

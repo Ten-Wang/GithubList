@@ -1,4 +1,4 @@
-package example.kotlin.teng.githublist
+package example.kotlin.teng.githublist.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,8 +7,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import example.kotlin.teng.githublist.detail.ActivityGithubUserDetail
-import example.kotlin.teng.githublist.network.GithubUserItem
+import example.kotlin.teng.githublist.GithubListApplication
+import example.kotlin.teng.githublist.R
+import example.kotlin.teng.githublist.ui.detail.ActivityGithubUserDetail
+import example.kotlin.teng.githublist.resource.network.GithubUserItem
 import kotlinx.android.synthetic.main.activity_github_user_list.*
 import java.util.*
 
@@ -24,7 +26,7 @@ class ActivityGithubUserList : AppCompatActivity(), GithubListPresenter.GLView,
 
         initViews()
 
-        mGithubListPresenter = GithubListPresenter(this, (applicationContext as BaseApplication).mGithubService)
+        mGithubListPresenter = GithubListPresenter(this, (applicationContext as GithubListApplication).mGithubService)
         mGithubListPresenter.onCreate()
     }
 

@@ -1,15 +1,16 @@
-package example.kotlin.teng.githublist.network
+package example.kotlin.teng.githublist.resource.network
 
 import android.util.Log
+import example.kotlin.teng.githublist.resource.network.api_interface.GithubAPI
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object GithubServiceHelper {
+object GithubAPIHelper {
     private const val TAG = "GithubServiceHelper"
 
-    fun getGithubService(url: String): GithubService {
+    fun getGithubService(url: String): GithubAPI {
         Log.i(TAG, "getGithubService")
         return Retrofit.Builder()
             .client(
@@ -20,6 +21,6 @@ object GithubServiceHelper {
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(url)
             .build()
-            .create(GithubService::class.java)
+            .create(GithubAPI::class.java)
     }
 }

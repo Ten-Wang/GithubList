@@ -1,4 +1,4 @@
-package example.kotlin.teng.githublist
+package example.kotlin.teng.githublist.ui
 
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
@@ -14,8 +14,9 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import example.kotlin.teng.githublist.base.RecyclerAdapterBase
-import example.kotlin.teng.githublist.network.GithubUserItem
+import example.kotlin.teng.githublist.R
+import example.kotlin.teng.githublist.ui.base.RecyclerAdapterBase
+import example.kotlin.teng.githublist.resource.network.GithubUserItem
 
 import java.util.ArrayList
 

@@ -1,9 +1,9 @@
-package example.kotlin.teng.githublist.network
+package example.kotlin.teng.githublist.resource.network
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class GithubUserDetailItem {
+class GithubUserItem {
 
     @SerializedName("login")
     @Expose
@@ -59,44 +59,5 @@ class GithubUserDetailItem {
     @SerializedName("site_admin")
     @Expose
     var siteAdmin: Boolean? = null
-    @SerializedName("name")
-    @Expose
-    var name: String? = null
-    @SerializedName("company")
-    @Expose
-    var company: String? = null
-    @SerializedName("blog")
-    @Expose
-    var blog: String? = null
-    @SerializedName("location")
-    @Expose
-    var location: String? = null
-    @SerializedName("email")
-    @Expose
-    var email: Any? = null
-    @SerializedName("hireable")
-    @Expose
-    var hireable: Any? = null
-    @SerializedName("bio")
-    @Expose
-    var bio: Any? = null
-    @SerializedName("public_repos")
-    @Expose
-    var publicRepos: Int? = null
-    @SerializedName("public_gists")
-    @Expose
-    var publicGists: Int? = null
-    @SerializedName("followers")
-    @Expose
-    var followers: Int? = null
-    @SerializedName("following")
-    @Expose
-    var following: Int? = null
-    @SerializedName("created_at")
-    @Expose
-    var createdAt: String? = null
-    @SerializedName("updated_at")
-    @Expose
-    var updatedAt: String? = null
 
 }

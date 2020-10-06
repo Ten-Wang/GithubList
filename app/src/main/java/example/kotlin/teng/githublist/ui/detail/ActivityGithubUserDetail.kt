@@ -1,4 +1,4 @@
-package example.kotlin.teng.githublist.detail
+package example.kotlin.teng.githublist.ui.detail
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -12,8 +12,8 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import example.kotlin.teng.githublist.BaseApplication
-import example.kotlin.teng.githublist.network.GithubUserDetailItem
+import example.kotlin.teng.githublist.GithubListApplication
+import example.kotlin.teng.githublist.resource.network.GithubUserDetailItem
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -45,7 +45,7 @@ class ActivityGithubUserDetail : AppCompatActivity() {
     private fun setData(login: String) {
         Log.i(TAG, "setData")
 
-        (applicationContext as BaseApplication).mGithubService.
+        (applicationContext as GithubListApplication).mGithubService.
             getUser(login).enqueue(object : Callback<GithubUserDetailItem> {
             override fun onResponse(
                 call: Call<GithubUserDetailItem>,

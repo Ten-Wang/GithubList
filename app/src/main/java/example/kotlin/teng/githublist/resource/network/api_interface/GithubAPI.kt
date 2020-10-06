@@ -1,11 +1,13 @@
-package example.kotlin.teng.githublist.network
+package example.kotlin.teng.githublist.resource.network.api_interface
 
+import example.kotlin.teng.githublist.resource.network.GithubUserDetailItem
+import example.kotlin.teng.githublist.resource.network.GithubUserItem
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface GithubService {
+interface GithubAPI {
 
     @get:GET("/users")
     val allUsers: Call<List<GithubUserItem>>

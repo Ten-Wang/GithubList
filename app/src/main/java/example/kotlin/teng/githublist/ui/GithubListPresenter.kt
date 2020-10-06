@@ -1,15 +1,15 @@
-package example.kotlin.teng.githublist
+package example.kotlin.teng.githublist.ui
 
 import android.util.Log
-import example.kotlin.teng.githublist.network.GithubService
-import example.kotlin.teng.githublist.network.GithubUserItem
+import example.kotlin.teng.githublist.resource.network.api_interface.GithubAPI
+import example.kotlin.teng.githublist.resource.network.GithubUserItem
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 import java.util.ArrayList
 
-class GithubListPresenter internal constructor(private val glView: GLView, private val mGithubService: GithubService) {
+class GithubListPresenter internal constructor(private val glView: GLView, private val mGithubService: GithubAPI) {
     private var since = 0
     private val perPage = 20
     private lateinit var userList: ArrayList<GithubUserItem>

@@ -1,4 +1,4 @@
-package example.kotlin.teng.githublist.base
+package example.kotlin.teng.githublist.ui.base
 
 import android.view.LayoutInflater
 import android.view.View
