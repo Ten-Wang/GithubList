@@ -1,21 +1,14 @@
 package example.kotlin.teng.githublist.resource.repository
 
 import android.app.Application
-import androidx.lifecycle.MutableLiveData
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
 import example.kotlin.teng.githublist.ThisApplication
-import example.kotlin.teng.githublist.custom.ApiResult
 import example.kotlin.teng.githublist.custom.livedata.LiveDataDelegate
 import example.kotlin.teng.githublist.resource.network.UserDetailItem
-import example.kotlin.teng.githublist.ui.detail.DetailActivity
-import kotlinx.android.synthetic.main.users_detail_activity.*
+import example.kotlin.teng.githublist.resource.network.UserItem
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.math.sin
 
 class AppRepository private constructor(private val _application: Application) {
 
@@ -29,6 +22,29 @@ class AppRepository private constructor(private val _application: Application) {
             }
             return INSTANCE!!
         }
+    }
+
+    val userListLiveData = LiveDataDelegate<ArrayList<UserItem>>()
+
+    fun getUserList(since: Int, perPage: Int) {
+        (_application as ThisApplication).mGithubService.getPagerUsers(since,perPage)
+            .enqueue(object : Callback<List<UserItem>>{
+                override fun onResponse(
+                    call: Call<List<UserItem>>,
+                    response: Response<List<UserItem>>
+                ) {
+                    val item = response.body()
+                    if (item != null) {
+                        userListLiveData.value = ArrayList(item)
+                    } else {
+                        TODO("Not yet implemented")
+                    }
+                }
+
+                override fun onFailure(call: Call<List<UserItem>>, t: Throwable) {
+                    TODO("Not yet implemented")
+                }
+            })
     }
 
     val userDetailLiveData = LiveDataDelegate<UserDetailItem>()

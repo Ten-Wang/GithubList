@@ -15,14 +15,13 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import example.kotlin.teng.githublist.R
-import example.kotlin.teng.githublist.ui.recycler.RecyclerAdapterBase
 import example.kotlin.teng.githublist.resource.network.UserItem
-
-import java.util.ArrayList
+import example.kotlin.teng.githublist.ui.recycler.RecyclerAdapterBase
+import java.util.*
 
 class UserListAdapter internal constructor(
-        private val userList: ArrayList<UserItem>,
-        private val mListener: UserListItemAdapterListener
+    private val userList: ArrayList<UserItem>,
+    private val mListener: UserListItemAdapterListener
 ) : RecyclerAdapterBase<UserItem>(userList) {
 
     internal var selectedPosition = -1
@@ -37,22 +36,13 @@ class UserListAdapter internal constructor(
         viewType: Int
     ): RecyclerView.ViewHolder {
         return UserViewHolder(
-            inflater.inflate(R.layout.item_user_list, parent, false))
+            inflater.inflate(R.layout.item_user_list, parent, false)
+        )
     }
 
     override fun onBindItemViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
         val vh = viewHolder as UserViewHolder
         vh.bindData(userList, position)
-    }
-
-    fun resetUserItems(items: List<UserItem>) {
-        this.userList.clear()
-        this.userList.addAll(items)
-    }
-
-    fun addUserItems(items: ArrayList<UserItem>) {
-        this.userList.addAll(items)
-        notifyLoadMoreChanged(true, items.size)
     }
 
     private inner class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -70,15 +60,15 @@ class UserListAdapter internal constructor(
             }
         }
 
-        internal fun bindData(list: List<UserItem>, position: Int) {
+        fun bindData(list: List<UserItem>, position: Int) {
             val item = list[position]
             textViewLogin.text = item.login
             relativeBadge.visibility =
-                    when (item.siteAdmin){
-                        true ->View.VISIBLE
-                        false->View.GONE
-                        null ->View.GONE
-                    }
+                when (item.siteAdmin) {
+                    true -> View.VISIBLE
+                    false -> View.GONE
+                    null -> View.GONE
+                }
 
             Glide.with(itemView.context)
                 .load(item.avatarUrl)
