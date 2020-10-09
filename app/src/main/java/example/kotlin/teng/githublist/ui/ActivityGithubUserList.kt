@@ -11,36 +11,58 @@ import example.kotlin.teng.githublist.GithubListApplication
 import example.kotlin.teng.githublist.R
 import example.kotlin.teng.githublist.ui.detail.ActivityGithubUserDetail
 import example.kotlin.teng.githublist.resource.network.GithubUserItem
+import example.kotlin.teng.githublist.resource.network.api_interface.GithubAPI
 import kotlinx.android.synthetic.main.activity_github_user_list.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.*
 
-class ActivityGithubUserList : AppCompatActivity(), GithubListPresenter.GLView,
+class ActivityGithubUserList : AppCompatActivity(),
     UsersListAdapter.UserListItemAdapterListener {
 
-    private lateinit var mGithubListPresenter: GithubListPresenter
+    private lateinit var mGithubService: GithubAPI
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.i(TAG, "onCreate")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_github_user_list)
 
-        initViews()
-
-        mGithubListPresenter = GithubListPresenter(this, (applicationContext as GithubListApplication).mGithubService)
-        mGithubListPresenter.onCreate()
-    }
-
-    private fun initViews() {
-        Log.i(TAG, "initViews")
-
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.addItemDecoration(
             DividerItemDecoration(
-            this, (recyclerView.layoutManager as LinearLayoutManager).orientation)
+                this, (recyclerView.layoutManager as LinearLayoutManager).orientation)
         )
+        mGithubService = (applicationContext as GithubListApplication).mGithubService
+        mGithubService.getPagerUsers(since, perPage).enqueue(object :
+            Callback<List<GithubUserItem>> {
+            override fun onResponse(
+                call: Call<List<GithubUserItem>>,
+                response: Response<List<GithubUserItem>>
+            ) {
+                Log.i(TAG, "onResponse")
+                if (response.body() != null) {
+                    since += perPage
+                    userList = ArrayList(response.body()!!)
+                    setUsersListRecyclerView(userList)
+                } else {
+                    onGitHubRejectRequest()
+                }
+
+            }
+
+            override fun onFailure(
+                call: Call<List<GithubUserItem>>,
+                t: Throwable
+            ) {
+                Log.i(TAG, "onFailure")
+                onGitHubRejectRequest()
+            }
+        })
+
     }
 
-    override fun onGitHubRejectRequest() {
+    private fun onGitHubRejectRequest() {
         Toast.makeText(this, "GitHub reject request!", Toast.LENGTH_SHORT).show()
     }
 
@@ -51,7 +73,7 @@ class ActivityGithubUserList : AppCompatActivity(), GithubListPresenter.GLView,
         val mUserItemAdapter = UsersListAdapter(resource, this)
 
         Toast.makeText(this, "Loading more...", Toast.LENGTH_SHORT).show()
-        mGithubListPresenter.onLoadMore()
+        onLoadMore()
 //        mUserItemAdapter.setLoadMoreListener({
 //            Toast.makeText(this, "Loading more...", Toast.LENGTH_SHORT).show()
 //            mGithubListPresenter.onLoadMore()
@@ -61,18 +83,18 @@ class ActivityGithubUserList : AppCompatActivity(), GithubListPresenter.GLView,
         mUserItemAdapter.notifyDataSetChanged()
     }
 
-    override fun addUsersListRecyclerView(items: ArrayList<GithubUserItem>) {
+    fun addUsersListRecyclerView(items: ArrayList<GithubUserItem>) {
         val mUserItemAdapter = (recyclerView.adapter as UsersListAdapter)
         mUserItemAdapter.addUserItems(items)
     }
 
-    override fun onLoadMoreFailed() {
+    fun onLoadMoreFailed() {
         val mUserItemAdapter = (recyclerView.adapter as UsersListAdapter)
         mUserItemAdapter.onLoadMoreFailed()
         onGitHubRejectRequest()
     }
 
-    override fun onListItemClick(githubUserItem: GithubUserItem) {
+    fun onListItemClick(githubUserItem: GithubUserItem) {
         Log.i(TAG, "onListItemClick")
         startActivity(
             Intent(this, ActivityGithubUserDetail::class.java)
@@ -82,11 +104,54 @@ class ActivityGithubUserList : AppCompatActivity(), GithubListPresenter.GLView,
 
     override fun onUserItemClick(position: Int) {
         Log.i(TAG, "onUserItemClick")
-        mGithubListPresenter.onUserItemClick(position)
+        onListItemClick(userList[position])
     }
 
     companion object {
         private val TAG = "ActivityGithubUserList"
     }
+    private var since = 0
+    private val perPage = 20
+    private lateinit var userList: ArrayList<GithubUserItem>
 
+    fun onLoadMore() {
+        mGithubService.getPagerUsers(since, perPage).enqueue(object :
+            Callback<List<GithubUserItem>> {
+            override fun onResponse(
+                call: Call<List<GithubUserItem>>,
+                response: Response<List<GithubUserItem>>
+            ) {
+                Log.i(TAG, "onResponse")
+                if (response.body() != null) {
+                    since += perPage
+                    val items = ArrayList(response.body()!!)
+                    userList.addAll(items)
+                    addUsersListRecyclerView(items)
+                } else {
+                    onGitHubRejectRequest()
+                }
+            }
+
+            override fun onFailure(
+                call: Call<List<GithubUserItem>>,
+                t: Throwable
+            ) {
+                Log.i(TAG, "onFailure")
+                onLoadMoreFailed()
+            }
+        })
+    }
+
+    internal interface GLView {
+        fun onGitHubRejectRequest()
+
+        fun setUsersListRecyclerView(items: ArrayList<GithubUserItem>)
+
+        fun addUsersListRecyclerView(items: ArrayList<GithubUserItem>)
+
+        fun onLoadMoreFailed()
+
+        fun onListItemClick(githubUserItem: GithubUserItem)
+
+    }
 }
