@@ -1,4 +1,4 @@
-package example.kotlin.teng.githublist.ui.userlist
+package example.kotlin.teng.githublist.ui.list
 
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
@@ -15,7 +15,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import example.kotlin.teng.githublist.R
-import example.kotlin.teng.githublist.ui.base.RecyclerAdapterBase
+import example.kotlin.teng.githublist.ui.recycler.RecyclerAdapterBase
 import example.kotlin.teng.githublist.resource.network.UserItem
 
 import java.util.ArrayList
@@ -57,9 +57,9 @@ class UserListAdapter internal constructor(
 
     private inner class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        private val textViewLogin: TextView = itemView.findViewById(R.id.textView_login)
+        private val textViewLogin: TextView = itemView.findViewById(R.id.tv_login)
         private val progress: ProgressBar = itemView.findViewById(R.id.progressBar)
-        private val relativeBadge: RelativeLayout = itemView.findViewById(R.id.relative_badge)
+        private val relativeBadge: RelativeLayout = itemView.findViewById(R.id.view_badge)
         private val imgAvatarUrl: ImageView = itemView.findViewById(R.id.img_avatar_url)
         private val contentLayout: View = itemView.findViewById(R.id.item_user_content)
 

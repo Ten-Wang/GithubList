@@ -1,4 +1,4 @@
-package example.kotlin.teng.githublist.ui.userlist
+package example.kotlin.teng.githublist.ui.list
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import example.kotlin.teng.githublist.ThisApplication
 import example.kotlin.teng.githublist.R
-import example.kotlin.teng.githublist.ui.detail.UserDetailActivity
+import example.kotlin.teng.githublist.ui.detail.DetailActivity
 import example.kotlin.teng.githublist.resource.network.UserItem
 import example.kotlin.teng.githublist.resource.network.api_interface.GithubAPI
-import kotlinx.android.synthetic.main.activity_github_user_list.*
+import kotlinx.android.synthetic.main.user_list_activity.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,7 +26,7 @@ class UserListActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.i(TAG, "onCreate")
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_github_user_list)
+        setContentView(R.layout.user_list_activity)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.addItemDecoration(
@@ -97,7 +97,7 @@ class UserListActivity : AppCompatActivity(),
     fun onListItemClick(userItem: UserItem) {
         Log.i(TAG, "onListItemClick")
         startActivity(
-            Intent(this, UserDetailActivity::class.java)
+            Intent(this, DetailActivity::class.java)
                 .putExtra("login", userItem.login)
         )
     }

@@ -8,7 +8,7 @@
     tools:context=".users.ActivityGithubUserList">
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/textView_login"
+        android:id="@+id/tv_login"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center|start"

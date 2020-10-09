@@ -42,7 +42,7 @@
             android:layout_weight="1">
 
             <TextView
-                android:id="@+id/textView_login"
+                android:id="@+id/tv_login"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -50,7 +50,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/relative_badge"
+            android:id="@+id/view_badge"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"

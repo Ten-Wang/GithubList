@@ -13,7 +13,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:fullBackupContent="@xml/backup_descriptor">
-        <activity android:name=".ui.userlist.UserListActivity"
+        <activity android:name=".ui.list.UserListActivity"
                   android:label="@string/activity_github_users_list_title">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="example.kotlin.teng.githublist.ui.detail.UserDetailActivity"
+        <activity android:name="example.kotlin.teng.githublist.ui.detail.DetailActivity"
                   android:theme="@style/AppThemeNoActionBar"/>
     </application>
 </manifest>
