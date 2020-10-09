@@ -1,4 +1,4 @@
-package example.kotlin.teng.githublist.ui.base
+package example.kotlin.teng.githublist.ui.recycler
 
 class RecyclerAdapterHelper(
     private val dataList: MutableList<*>,

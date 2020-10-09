@@ -1,4 +1,4 @@
-package example.kotlin.teng.githublist.ui.base
+package example.kotlin.teng.githublist.ui.recycler
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import example.kotlin.teng.githublist.R
 
 abstract class RecyclerAdapterBase<T> protected constructor(dataList: MutableList<T>) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>(), LoadMoreExecutor, RecyclerAdapterHelper.CustomizeSizeDelegate {
+    RecyclerView.Adapter<RecyclerView.ViewHolder>(), LoadMoreExecutor,
+    RecyclerAdapterHelper.CustomizeSizeDelegate {
 
     private val recyclerAdapterHelper: RecyclerAdapterHelper = RecyclerAdapterHelper(dataList, this)
     private lateinit var headerView: View
@@ -122,7 +123,8 @@ abstract class RecyclerAdapterBase<T> protected constructor(dataList: MutableLis
 
     private fun onCreateLoadMoreViewHolder(from: LayoutInflater, parent: ViewGroup): RecyclerView.ViewHolder {
         return object :
-            RecyclerView.ViewHolder(LayoutInflater.from(parent.context).inflate(DEFAULT_LOAD_MORE_LAYOUT, parent, false)) {
+            RecyclerView.ViewHolder(LayoutInflater.from(parent.context).inflate(
+                DEFAULT_LOAD_MORE_LAYOUT, parent, false)) {
 
         }
     }

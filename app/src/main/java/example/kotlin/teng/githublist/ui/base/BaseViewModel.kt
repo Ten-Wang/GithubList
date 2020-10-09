@@ -1,4 +1,4 @@
-package example.kotlin.teng.githublist.ui
+package example.kotlin.teng.githublist.ui.base
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
