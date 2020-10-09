@@ -1,4 +1,4 @@
-package example.kotlin.teng.githublist.ui
+package example.kotlin.teng.githublist.ui.userlist
 
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
@@ -16,14 +16,14 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import example.kotlin.teng.githublist.R
 import example.kotlin.teng.githublist.ui.base.RecyclerAdapterBase
-import example.kotlin.teng.githublist.resource.network.GithubUserItem
+import example.kotlin.teng.githublist.resource.network.UserItem
 
 import java.util.ArrayList
 
-class UsersListAdapter internal constructor(
-    private val userList: ArrayList<GithubUserItem>,
-    private val mListener: UserListItemAdapterListener
-) : RecyclerAdapterBase<GithubUserItem>(userList) {
+class UserListAdapter internal constructor(
+        private val userList: ArrayList<UserItem>,
+        private val mListener: UserListItemAdapterListener
+) : RecyclerAdapterBase<UserItem>(userList) {
 
     internal var selectedPosition = -1
 
@@ -45,12 +45,12 @@ class UsersListAdapter internal constructor(
         vh.bindData(userList, position)
     }
 
-    fun resetUserItems(items: List<GithubUserItem>) {
+    fun resetUserItems(items: List<UserItem>) {
         this.userList.clear()
         this.userList.addAll(items)
     }
 
-    fun addUserItems(items: ArrayList<GithubUserItem>) {
+    fun addUserItems(items: ArrayList<UserItem>) {
         this.userList.addAll(items)
         notifyLoadMoreChanged(true, items.size)
     }
@@ -70,7 +70,7 @@ class UsersListAdapter internal constructor(
             }
         }
 
-        internal fun bindData(list: List<GithubUserItem>, position: Int) {
+        internal fun bindData(list: List<UserItem>, position: Int) {
             val item = list[position]
             textViewLogin.text = item.login
             relativeBadge.visibility =
@@ -110,6 +110,6 @@ class UsersListAdapter internal constructor(
 
     internal interface UserListItemAdapterListener {
         fun onUserItemClick(position: Int)
-        fun setUsersListRecyclerView(resource: ArrayList<GithubUserItem>)
+        fun setUsersListRecyclerView(resource: ArrayList<UserItem>)
     }
 }

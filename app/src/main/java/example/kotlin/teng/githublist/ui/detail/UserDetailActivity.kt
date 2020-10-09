@@ -12,15 +12,15 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import example.kotlin.teng.githublist.GithubListApplication
-import example.kotlin.teng.githublist.resource.network.GithubUserDetailItem
+import example.kotlin.teng.githublist.ThisApplication
+import example.kotlin.teng.githublist.resource.network.UserDetailItem
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import example.kotlin.teng.githublist.R
 import kotlinx.android.synthetic.main.activity_github_users_detail.*
 
-class ActivityGithubUserDetail : AppCompatActivity() {
+class UserDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.i(TAG, "onCreate")
@@ -45,11 +45,11 @@ class ActivityGithubUserDetail : AppCompatActivity() {
     private fun setData(login: String) {
         Log.i(TAG, "setData")
 
-        (applicationContext as GithubListApplication).mGithubService.
-            getUser(login).enqueue(object : Callback<GithubUserDetailItem> {
+        (applicationContext as ThisApplication).mGithubService.
+            getUser(login).enqueue(object : Callback<UserDetailItem> {
             override fun onResponse(
-                call: Call<GithubUserDetailItem>,
-                response: Response<GithubUserDetailItem>
+                    call: Call<UserDetailItem>,
+                    response: Response<UserDetailItem>
             ) {
                 val item = response.body()
                 if (item != null) {
@@ -87,7 +87,7 @@ class ActivityGithubUserDetail : AppCompatActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<GithubUserDetailItem>, t: Throwable) {
+            override fun onFailure(call: Call<UserDetailItem>, t: Throwable) {
                 Toast.makeText(application, t.toString(), Toast.LENGTH_SHORT).show()
             }
         })
