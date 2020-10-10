@@ -13,6 +13,7 @@ import example.kotlin.teng.githublist.custom.livedata.LiveDataObserver
 import example.kotlin.teng.githublist.ui.detail.DetailActivity
 import example.kotlin.teng.githublist.resource.network.UserItem
 import example.kotlin.teng.githublist.ui.base.BaseActivity
+import example.kotlin.teng.githublist.ui.recycler.LoadMoreExecutor
 import kotlinx.android.synthetic.main.user_list_activity.*
 import kotlin.collections.ArrayList
 
@@ -70,9 +71,14 @@ class UserListActivity : BaseActivity(),
         Log.i(TAG, "setUsersListRecyclerView")
 
         val mUserItemAdapter = UserListAdapter(resource, this)
-
+        mUserItemAdapter.setLoadMoreEnable(true)
+        mUserItemAdapter.setLoadMoreListener(object : LoadMoreExecutor.LoadMoreListener{
+            override fun onLoadMore() {
+                _viewModel.getUserList(since,perPage)
+            }
+        })
         Toast.makeText(this, "Loading more...", Toast.LENGTH_SHORT).show()
-//        onLoadMore()
+
         recyclerView.recycledViewPool.clear()
         recyclerView.adapter = mUserItemAdapter
         mUserItemAdapter.notifyDataSetChanged()
@@ -93,35 +99,6 @@ class UserListActivity : BaseActivity(),
 
     companion object {
         private const val TAG = "UserListActivity"
-    }
-
-    private fun onLoadMore() {
-        _viewModel.getUserList(since,perPage)
-//        mGithubService.getPagerUsers(since, perPage).enqueue(object :
-//            Callback<List<UserItem>> {
-//            override fun onResponse(
-//                call: Call<List<UserItem>>,
-//                response: Response<List<UserItem>>
-//            ) {
-//                Log.i(TAG, "onResponse")
-//                if (response.body() != null) {
-//                    since += perPage
-//                    val items = ArrayList(response.body()!!)
-//                    userList.addAll(items)
-//                    addUsersListRecyclerView(items)
-//                } else {
-//                    onGitHubRejectRequest()
-//                }
-//            }
-//
-//            override fun onFailure(
-//                call: Call<List<UserItem>>,
-//                t: Throwable
-//            ) {
-//                Log.i(TAG, "onFailure")
-//                onLoadMoreFailed()
-//            }
-//        })
     }
 
 }

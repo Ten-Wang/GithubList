@@ -16,13 +16,14 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import example.kotlin.teng.githublist.R
 import example.kotlin.teng.githublist.resource.network.UserItem
+import example.kotlin.teng.githublist.ui.recycler.LoadMoreExecutor
 import example.kotlin.teng.githublist.ui.recycler.RecyclerAdapterBase
 import java.util.*
 
 class UserListAdapter internal constructor(
     private val userList: ArrayList<UserItem>,
     private val mListener: UserListItemAdapterListener
-) : RecyclerAdapterBase<UserItem>(userList) {
+) : RecyclerAdapterBase<UserItem>(userList) , LoadMoreExecutor {
 
     internal var selectedPosition = -1
 
@@ -54,7 +55,7 @@ class UserListAdapter internal constructor(
         private val contentLayout: View = itemView.findViewById(R.id.item_user_content)
 
         init {
-            contentLayout.setOnClickListener { _ ->
+            contentLayout.setOnClickListener {
                 selectedPosition = getItemPosition(this@UserViewHolder)
                 mListener.onUserItemClick(getItemPosition(this@UserViewHolder))
             }
