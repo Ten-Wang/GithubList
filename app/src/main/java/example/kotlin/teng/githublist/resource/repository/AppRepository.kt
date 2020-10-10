@@ -1,6 +1,7 @@
 package example.kotlin.teng.githublist.resource.repository
 
 import android.app.Application
+import android.util.Log
 import example.kotlin.teng.githublist.ThisApplication
 import example.kotlin.teng.githublist.custom.livedata.LiveDataDelegate
 import example.kotlin.teng.githublist.resource.network.UserDetailItem
@@ -27,15 +28,23 @@ class AppRepository private constructor(private val _application: Application) {
     val userListLiveData = LiveDataDelegate<ArrayList<UserItem>>()
 
     fun getUserList(since: Int, perPage: Int) {
-        (_application as ThisApplication).mGithubService.getPagerUsers(since,perPage)
-            .enqueue(object : Callback<List<UserItem>>{
+        (_application as ThisApplication).mGithubService.getPagerUsers(since, perPage)
+            .enqueue(object : Callback<List<UserItem>> {
                 override fun onResponse(
                     call: Call<List<UserItem>>,
                     response: Response<List<UserItem>>
                 ) {
                     val item = response.body()
                     if (item != null) {
-                        userListLiveData.value = ArrayList(item)
+                        if (since == 0) {
+                            userListLiveData.value = ArrayList(item)
+                        } else {
+                            val list = userListLiveData.value
+                            for (userItem: UserItem in item) {
+                                list.add(userItem)
+                            }
+                            userListLiveData.postValue(list)
+                        }
                     } else {
                         TODO("Not yet implemented")
                     }
