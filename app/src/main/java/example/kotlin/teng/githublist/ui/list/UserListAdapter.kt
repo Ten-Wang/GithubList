@@ -23,7 +23,7 @@ import java.util.*
 class UserListAdapter internal constructor(
     private val userList: ArrayList<UserItem>,
     private val mListener: UserListItemAdapterListener
-) : RecyclerAdapterBase<UserItem>(userList) , LoadMoreExecutor {
+) : RecyclerAdapterBase<UserItem>(userList), LoadMoreExecutor {
 
     internal var selectedPosition = -1
 

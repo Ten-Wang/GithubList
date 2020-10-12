@@ -1,7 +1,6 @@
 package example.kotlin.teng.githublist.resource.repository
 
 import android.app.Application
-import android.util.Log
 import example.kotlin.teng.githublist.ThisApplication
 import example.kotlin.teng.githublist.custom.livedata.LiveDataDelegate
 import example.kotlin.teng.githublist.resource.network.UserDetailItem
@@ -9,7 +8,6 @@ import example.kotlin.teng.githublist.resource.network.UserItem
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import kotlin.math.sin
 
 class AppRepository private constructor(private val _application: Application) {
 

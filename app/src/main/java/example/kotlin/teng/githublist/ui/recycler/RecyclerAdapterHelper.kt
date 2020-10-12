@@ -3,7 +3,7 @@ package example.kotlin.teng.githublist.ui.recycler
 class RecyclerAdapterHelper(
     private val dataList: MutableList<*>,
     private val sizeDelegate: CustomizeSizeDelegate
-    ) {
+) {
 
     var isLoadMoreEnable: Boolean = false
     var isLoadMoreFailed: Boolean = false

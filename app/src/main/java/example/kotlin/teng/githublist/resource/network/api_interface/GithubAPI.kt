@@ -13,7 +13,10 @@ interface GithubAPI {
     val allUsers: Call<List<UserItem>>
 
     @GET("/users")
-    fun getPagerUsers(@Query("since") since: Int, @Query("per_page") perPage: Int): Call<List<UserItem>>
+    fun getPagerUsers(
+        @Query("since") since: Int,
+        @Query("per_page") perPage: Int
+    ): Call<List<UserItem>>
 
     @GET("/users/{user_id}")
     fun getUser(@Path("user_id") userId: String): Call<UserDetailItem>

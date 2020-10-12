@@ -9,20 +9,21 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class ThisApplication : Application() {
-    
+
     lateinit var mGithubService: GithubAPI
 
     override fun onCreate() {
         Log.i(TAG, "onCreate")
         super.onCreate()
-        mGithubService = getGithubService(BuildConfig.GITHUTAPI_URI)
+        mGithubService = getGithubService()
     }
 
     companion object {
         private const val TAG = "BaseApplication"
     }
 
-    private fun getGithubService(url: String): GithubAPI {
+    private fun getGithubService(): GithubAPI {
+        val baseUrl = BuildConfig.GITHUTAPI_URI
         Log.i(TAG, "getGithubService")
         return Retrofit.Builder()
             .client(
@@ -31,7 +32,7 @@ class ThisApplication : Application() {
                     .build()
             )
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(url)
+            .baseUrl(baseUrl)
             .build()
             .create(GithubAPI::class.java)
     }

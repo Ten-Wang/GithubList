@@ -6,8 +6,6 @@
     <solid android:color="@color/colorAccent" />
 
     <!-- android:radius 圆角的半径 -->
-    <corners
-        android:radius="16dp"
-        />
+    <corners android:radius="16dp" />
 
 </shape>

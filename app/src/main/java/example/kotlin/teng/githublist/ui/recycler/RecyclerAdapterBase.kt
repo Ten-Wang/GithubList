@@ -39,17 +39,26 @@ abstract class RecyclerAdapterBase<T> protected constructor(dataList: MutableLis
                 vh = onCreateHeaderViewHolder(LayoutInflater.from(parent.context), parent)
                 vh.setIsRecyclable(false)
             }
-            recyclerAdapterHelper.isLoadMoreType(viewType) -> vh = onCreateLoadMoreViewHolder(LayoutInflater.from(parent.context), parent)
-            recyclerAdapterHelper.isFooterType(viewType) -> vh = onCreateFooterViewHolder(LayoutInflater.from(parent.context), parent)
-            else -> vh = onCreateItemViewHolder(LayoutInflater.from(parent.context), parent, viewType)
+            recyclerAdapterHelper.isLoadMoreType(viewType) -> vh =
+                onCreateLoadMoreViewHolder(LayoutInflater.from(parent.context), parent)
+            recyclerAdapterHelper.isFooterType(viewType) -> vh =
+                onCreateFooterViewHolder(LayoutInflater.from(parent.context), parent)
+            else -> vh =
+                onCreateItemViewHolder(LayoutInflater.from(parent.context), parent, viewType)
         }
         return vh
     }
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
         when {
-            recyclerAdapterHelper.isNormalItem(position) -> onBindItemViewHolder(viewHolder, position - if (recyclerAdapterHelper.hasHeaderView()) 1 else 0)
-            recyclerAdapterHelper.checkToBindLoadMore(position) -> onBindLoadMoreViewHolder(viewHolder, recyclerAdapterHelper.isLoadMoreFailed)
+            recyclerAdapterHelper.isNormalItem(position) -> onBindItemViewHolder(
+                viewHolder,
+                position - if (recyclerAdapterHelper.hasHeaderView()) 1 else 0
+            )
+            recyclerAdapterHelper.checkToBindLoadMore(position) -> onBindLoadMoreViewHolder(
+                viewHolder,
+                recyclerAdapterHelper.isLoadMoreFailed
+            )
             recyclerAdapterHelper.isHeaderItem(position) -> onBindHeaderViewHolder(viewHolder)
             recyclerAdapterHelper.isFooterItem(position) -> onBindFooterViewHolder(viewHolder)
         }
@@ -83,19 +92,29 @@ abstract class RecyclerAdapterBase<T> protected constructor(dataList: MutableLis
         recyclerAdapterHelper.setHasFooterView(true)
     }
 
-    private fun onCreateHeaderViewHolder(inflater: LayoutInflater, parent: ViewGroup): RecyclerView.ViewHolder {
+    private fun onCreateHeaderViewHolder(
+        inflater: LayoutInflater,
+        parent: ViewGroup
+    ): RecyclerView.ViewHolder {
         return object : RecyclerView.ViewHolder(this.headerView) {
 
         }
     }
 
-    protected fun onCreateFooterViewHolder(inflater: LayoutInflater, parent: ViewGroup): RecyclerView.ViewHolder {
+    protected fun onCreateFooterViewHolder(
+        inflater: LayoutInflater,
+        parent: ViewGroup
+    ): RecyclerView.ViewHolder {
         return object : RecyclerView.ViewHolder(footerView) {
 
         }
     }
 
-    protected fun onBindLoadMoreViewHolder(viewHolder: RecyclerView.ViewHolder, isLoadMoreFailed: Boolean) {}
+    protected fun onBindLoadMoreViewHolder(
+        viewHolder: RecyclerView.ViewHolder,
+        isLoadMoreFailed: Boolean
+    ) {
+    }
 
     protected fun onBindHeaderViewHolder(viewHolder: RecyclerView.ViewHolder) {
         if (this.headerView.parent != null) {
@@ -121,10 +140,16 @@ abstract class RecyclerAdapterBase<T> protected constructor(dataList: MutableLis
         return recyclerAdapterHelper.isHeaderType(vh.itemViewType)
     }
 
-    private fun onCreateLoadMoreViewHolder(from: LayoutInflater, parent: ViewGroup): RecyclerView.ViewHolder {
+    private fun onCreateLoadMoreViewHolder(
+        from: LayoutInflater,
+        parent: ViewGroup
+    ): RecyclerView.ViewHolder {
         return object :
-            RecyclerView.ViewHolder(LayoutInflater.from(parent.context).inflate(
-                DEFAULT_LOAD_MORE_LAYOUT, parent, false)) {
+            RecyclerView.ViewHolder(
+                LayoutInflater.from(parent.context).inflate(
+                    DEFAULT_LOAD_MORE_LAYOUT, parent, false
+                )
+            ) {
 
         }
     }

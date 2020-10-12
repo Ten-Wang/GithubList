@@ -14,7 +14,7 @@
         android:gravity="center|start"
         android:layout_marginStart="8dp"
         android:text="@string/item_user_list_header_test_view"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat"/>
+        android:textAppearance="@style/Base.TextAppearance.AppCompat" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

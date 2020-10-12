@@ -10,12 +10,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import example.kotlin.teng.githublist.R
 import example.kotlin.teng.githublist.custom.livedata.LiveDataContent
 import example.kotlin.teng.githublist.custom.livedata.LiveDataObserver
-import example.kotlin.teng.githublist.ui.detail.DetailActivity
 import example.kotlin.teng.githublist.resource.network.UserItem
 import example.kotlin.teng.githublist.ui.base.BaseActivity
+import example.kotlin.teng.githublist.ui.detail.DetailActivity
 import example.kotlin.teng.githublist.ui.recycler.LoadMoreExecutor
 import kotlinx.android.synthetic.main.user_list_activity.*
-import kotlin.collections.ArrayList
 
 class UserListActivity : BaseActivity(),
     UserListAdapter.UserListItemAdapterListener {
@@ -49,8 +48,8 @@ class UserListActivity : BaseActivity(),
                 if (liveDataContent.content != null) {
                     val list = liveDataContent.content
                     if (list != null) {
-                        since += perPage
                         userList = list
+                        since = list[list.size - 1].id ?: since + 20
                         setUsersListRecyclerView(list)
                     } else {
                         onGitHubRejectRequest()
@@ -72,9 +71,9 @@ class UserListActivity : BaseActivity(),
 
         val mUserItemAdapter = UserListAdapter(resource, this)
         mUserItemAdapter.setLoadMoreEnable(true)
-        mUserItemAdapter.setLoadMoreListener(object : LoadMoreExecutor.LoadMoreListener{
+        mUserItemAdapter.setLoadMoreListener(object : LoadMoreExecutor.LoadMoreListener {
             override fun onLoadMore() {
-                _viewModel.getUserList(since,perPage)
+                _viewModel.getUserList(since, perPage)
             }
         })
         Toast.makeText(this, "Loading more...", Toast.LENGTH_SHORT).show()
