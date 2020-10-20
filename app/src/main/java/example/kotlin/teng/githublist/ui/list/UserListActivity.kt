@@ -51,19 +51,10 @@ class UserListActivity : BaseActivity(),
                         userList = list
                         since = list[list.size - 1].id ?: since + 20
                         setUsersListRecyclerView(list)
-                    } else {
-                        onGitHubRejectRequest()
                     }
-                } else {
-                    onGitHubRejectRequest()
                 }
             }
         }
-
-
-    private fun onGitHubRejectRequest() {
-        Toast.makeText(this, "GitHub reject request!", Toast.LENGTH_SHORT).show()
-    }
 
 
     override fun setUsersListRecyclerView(resource: ArrayList<UserItem>) {
@@ -85,14 +76,9 @@ class UserListActivity : BaseActivity(),
 
     override fun onUserItemClick(position: Int) {
         Log.i(TAG, "onUserItemClick")
-        onListItemClick(userList[position])
-    }
-
-    private fun onListItemClick(userItem: UserItem) {
-        Log.i(TAG, "onListItemClick")
         startActivity(
-            Intent(this, DetailActivity::class.java)
-                .putExtra("login", userItem.login)
+                Intent(this, DetailActivity::class.java)
+                        .putExtra("login", userList[position].login)
         )
     }
 

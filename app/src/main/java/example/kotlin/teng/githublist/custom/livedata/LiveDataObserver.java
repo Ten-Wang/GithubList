@@ -13,7 +13,7 @@ import androidx.lifecycle.Observer;
  */
 public abstract class LiveDataObserver<T> implements Observer<T> {
 
-    private LifecycleEvent mLifecycleEvent;
+    private final LifecycleEvent mLifecycleEvent;
 
     public LiveDataObserver(@NonNull LifecycleEvent lifecycleEvent) {
         mLifecycleEvent = lifecycleEvent;
