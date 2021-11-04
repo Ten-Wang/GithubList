@@ -1,10 +1,9 @@
 package example.kotlin.teng.githublist.ui.detail
 
-import android.app.Application
-import example.kotlin.teng.githublist.ui.base.BaseViewModel
+import androidx.lifecycle.ViewModel
+import example.kotlin.teng.githublist.resource.repository.AppRepository
 
-class DetailViewModel(application: Application) : BaseViewModel(application) {
-
+class DetailViewModel(private val appRepo: AppRepository): ViewModel()  {
     val userDetail = appRepo.userDetailLiveData
     fun getUserDetail(login: String) {
         appRepo.getUserDetail(login)

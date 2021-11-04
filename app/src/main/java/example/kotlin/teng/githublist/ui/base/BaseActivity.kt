@@ -4,19 +4,15 @@ package example.kotlin.teng.githublist.ui.base
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import example.kotlin.teng.githublist.custom.livedata.LifecycleEvent
 
 abstract class BaseActivity : AppCompatActivity() {
 
     protected var lifecycleEvent = LifecycleEvent()
 
-    private lateinit var baseViewModel: BaseViewModel
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         lifecycleEvent.event = Lifecycle.Event.ON_CREATE
-        baseViewModel = ViewModelProvider(this).get(BaseViewModel::class.java)
     }
 
     override fun onStart() {

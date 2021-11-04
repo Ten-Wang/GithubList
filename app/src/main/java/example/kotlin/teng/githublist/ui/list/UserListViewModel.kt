@@ -1,9 +1,9 @@
 package example.kotlin.teng.githublist.ui.list
 
-import android.app.Application
-import example.kotlin.teng.githublist.ui.base.BaseViewModel
+import androidx.lifecycle.ViewModel
+import example.kotlin.teng.githublist.resource.repository.AppRepository
 
-class UserListViewModel(application: Application) : BaseViewModel(application) {
+class UserListViewModel(private val appRepo:AppRepository): ViewModel() {
 
     val userList = appRepo.userListLiveData
     fun getUserList(since: Int, perPage: Int) {

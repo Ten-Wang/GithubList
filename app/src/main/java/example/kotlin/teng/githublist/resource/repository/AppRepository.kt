@@ -1,6 +1,6 @@
 package example.kotlin.teng.githublist.resource.repository
 
-import android.app.Application
+import android.content.Context
 import example.kotlin.teng.githublist.ThisApplication
 import example.kotlin.teng.githublist.custom.livedata.LiveDataDelegate
 import example.kotlin.teng.githublist.resource.network.UserDetailItem
@@ -9,24 +9,12 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AppRepository private constructor(private val application: Application) {
-
-    companion object {
-        private var INSTANCE: AppRepository? = null
-
-        @Synchronized
-        fun getInstance(application: Application): AppRepository {
-            if (INSTANCE == null) {
-                INSTANCE = AppRepository(application)
-            }
-            return INSTANCE!!
-        }
-    }
+class AppRepository (private val context: Context) {
 
     val userListLiveData = LiveDataDelegate<ArrayList<UserItem>>()
 
     fun getUserList(since: Int, perPage: Int) {
-        (application as ThisApplication).mGithubService.getPagerUsers(since, perPage)
+        (context as ThisApplication).mGithubService.getPagerUsers(since, perPage)
             .enqueue(object : Callback<List<UserItem>> {
                 override fun onResponse(
                     call: Call<List<UserItem>>,
@@ -57,7 +45,7 @@ class AppRepository private constructor(private val application: Application) {
     val userDetailLiveData = LiveDataDelegate<UserDetailItem>()
 
     fun getUserDetail(login: String) {
-        (application as ThisApplication).mGithubService.getUser(login)
+        (context as ThisApplication).mGithubService.getUser(login)
             .enqueue(object : Callback<UserDetailItem> {
                 override fun onResponse(
                     call: Call<UserDetailItem>,

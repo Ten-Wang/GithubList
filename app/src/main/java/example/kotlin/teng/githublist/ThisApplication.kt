@@ -2,6 +2,7 @@ package example.kotlin.teng.githublist
 
 import android.app.Application
 import android.util.Log
+import example.kotlin.teng.githublist.di.repositoryModule
 import example.kotlin.teng.githublist.di.viewModelModule
 import example.kotlin.teng.githublist.resource.network.api_interface.GithubAPI
 import okhttp3.OkHttpClient
@@ -26,6 +27,7 @@ class ThisApplication : Application() {
             androidContext(this@ThisApplication)
             // use modules
             modules(
+                repositoryModule,
                 viewModelModule
             )
         }
