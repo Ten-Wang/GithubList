@@ -7,19 +7,20 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import example.kotlin.teng.githublist.R
 import example.kotlin.teng.githublist.custom.livedata.LiveDataContent
 import example.kotlin.teng.githublist.custom.livedata.LiveDataObserver
+import example.kotlin.teng.githublist.databinding.UserListActivityBinding
 import example.kotlin.teng.githublist.resource.network.UserItem
 import example.kotlin.teng.githublist.ui.base.BaseActivity
 import example.kotlin.teng.githublist.ui.detail.DetailActivity
 import example.kotlin.teng.githublist.ui.recycler.LoadMoreExecutor
-import kotlinx.android.synthetic.main.user_list_activity.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class UserListActivity : BaseActivity(),
     UserListAdapter.UserListItemAdapterListener {
 
-    private lateinit var _viewModel: UserListViewModel
+    private val _viewModel: UserListViewModel by viewModel()
+    private lateinit var binding: UserListActivityBinding
 
     private var since = 0
     private val perPage = 20
@@ -27,15 +28,15 @@ class UserListActivity : BaseActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.user_list_activity)
+        binding = UserListActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        _viewModel = ViewModelProvider(this).get(UserListViewModel::class.java)
         _viewModel.userList.observe(this, _userList)
 
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.addItemDecoration(
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.addItemDecoration(
             DividerItemDecoration(
-                this, (recyclerView.layoutManager as LinearLayoutManager).orientation
+                this, (binding.recyclerView.layoutManager as LinearLayoutManager).orientation
             )
         )
 
@@ -69,9 +70,8 @@ class UserListActivity : BaseActivity(),
         })
         Toast.makeText(this, "Loading more...", Toast.LENGTH_SHORT).show()
 
-        recyclerView.recycledViewPool.clear()
-        recyclerView.adapter = mUserItemAdapter
-        mUserItemAdapter.notifyDataSetChanged()
+        binding.recyclerView.recycledViewPool.clear()
+        binding.recyclerView.adapter = mUserItemAdapter
     }
 
     override fun onUserItemClick(position: Int) {

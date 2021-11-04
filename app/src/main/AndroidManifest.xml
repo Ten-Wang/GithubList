@@ -15,7 +15,8 @@
         android:fullBackupContent="@xml/backup_descriptor">
         <activity
             android:name=".ui.list.UserListActivity"
-            android:label="@string/activity_github_users_list_title">
+            android:label="@string/activity_github_users_list_title"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -26,6 +27,7 @@
 
         <activity
             android:name="example.kotlin.teng.githublist.ui.detail.DetailActivity"
-            android:theme="@style/AppThemeNoActionBar" />
+            android:theme="@style/AppThemeNoActionBar"
+            android:exported="false"/>
     </application>
 </manifest>

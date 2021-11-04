@@ -9,7 +9,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AppRepository private constructor(private val _application: Application) {
+class AppRepository private constructor(private val application: Application) {
 
     companion object {
         private var INSTANCE: AppRepository? = null
@@ -26,7 +26,7 @@ class AppRepository private constructor(private val _application: Application) {
     val userListLiveData = LiveDataDelegate<ArrayList<UserItem>>()
 
     fun getUserList(since: Int, perPage: Int) {
-        (_application as ThisApplication).mGithubService.getPagerUsers(since, perPage)
+        (application as ThisApplication).mGithubService.getPagerUsers(since, perPage)
             .enqueue(object : Callback<List<UserItem>> {
                 override fun onResponse(
                     call: Call<List<UserItem>>,
@@ -57,7 +57,7 @@ class AppRepository private constructor(private val _application: Application) {
     val userDetailLiveData = LiveDataDelegate<UserDetailItem>()
 
     fun getUserDetail(login: String) {
-        (_application as ThisApplication).mGithubService.getUser(login)
+        (application as ThisApplication).mGithubService.getUser(login)
             .enqueue(object : Callback<UserDetailItem> {
                 override fun onResponse(
                     call: Call<UserDetailItem>,

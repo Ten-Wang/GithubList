@@ -11,12 +11,12 @@ abstract class BaseActivity : AppCompatActivity() {
 
     protected var lifecycleEvent = LifecycleEvent()
 
-    private lateinit var _baseViewModel: BaseViewModel
+    private lateinit var baseViewModel: BaseViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         lifecycleEvent.event = Lifecycle.Event.ON_CREATE
-        _baseViewModel = ViewModelProvider(this).get(BaseViewModel::class.java)
+        baseViewModel = ViewModelProvider(this).get(BaseViewModel::class.java)
     }
 
     override fun onStart() {
