@@ -1,10 +1,10 @@
 package example.kotlin.teng.githublist
 
 import android.app.Application
-import android.util.Log
 import example.kotlin.teng.githublist.di.repositoryModule
+import example.kotlin.teng.githublist.di.serviceModule
 import example.kotlin.teng.githublist.di.viewModelModule
-import example.kotlin.teng.githublist.resource.network.api_interface.GithubAPI
+import example.kotlin.teng.githublist.resource.network.api_interface.GithubService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
@@ -15,10 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ThisApplication : Application() {
 
-    lateinit var mGithubService: GithubAPI
-
     override fun onCreate() {
-        Log.i(TAG, "onCreate")
         super.onCreate()
         startKoin {
             // Koin Android logger
@@ -27,29 +24,10 @@ class ThisApplication : Application() {
             androidContext(this@ThisApplication)
             // use modules
             modules(
+                serviceModule,
                 repositoryModule,
                 viewModelModule
             )
         }
-        mGithubService = getGithubService()
-    }
-
-    companion object {
-        private const val TAG = "BaseApplication"
-    }
-
-    private fun getGithubService(): GithubAPI {
-        val baseUrl = BuildConfig.GITHUTAPI_URI
-        Log.i(TAG, "getGithubService")
-        return Retrofit.Builder()
-            .client(
-                OkHttpClient.Builder()
-                    .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-                    .build()
-            )
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(baseUrl)
-            .build()
-            .create(GithubAPI::class.java)
     }
 }

@@ -1,80 +1,43 @@
 package example.kotlin.teng.githublist.resource.network
 
-import com.google.gson.annotations.Expose
+
 import com.google.gson.annotations.SerializedName
 
-class UserItem {
-
-    @SerializedName("login")
-    @Expose
-    var login: String? = null
-
-    @SerializedName("id")
-    @Expose
-    var id: Int? = null
-
-    @SerializedName("node_id")
-    @Expose
-    var nodeId: String? = null
-
+data class UserItem(
     @SerializedName("avatar_url")
-    @Expose
-    var avatarUrl: String? = null
-
-    @SerializedName("gravatar_id")
-    @Expose
-    var gravatarId: String? = null
-
-    @SerializedName("url")
-    @Expose
-    var url: String? = null
-
-    @SerializedName("html_url")
-    @Expose
-    var htmlUrl: String? = null
-
-    @SerializedName("followers_url")
-    @Expose
-    var followersUrl: String? = null
-
-    @SerializedName("following_url")
-    @Expose
-    var followingUrl: String? = null
-
-    @SerializedName("gists_url")
-    @Expose
-    var gistsUrl: String? = null
-
-    @SerializedName("starred_url")
-    @Expose
-    var starredUrl: String? = null
-
-    @SerializedName("subscriptions_url")
-    @Expose
-    var subscriptionsUrl: String? = null
-
-    @SerializedName("organizations_url")
-    @Expose
-    var organizationsUrl: String? = null
-
-    @SerializedName("repos_url")
-    @Expose
-    var reposUrl: String? = null
-
+    val avatarUrl: String,
     @SerializedName("events_url")
-    @Expose
-    var eventsUrl: String? = null
-
+    val eventsUrl: String,
+    @SerializedName("followers_url")
+    val followersUrl: String,
+    @SerializedName("following_url")
+    val followingUrl: String,
+    @SerializedName("gists_url")
+    val gistsUrl: String,
+    @SerializedName("gravatar_id")
+    val gravatarId: String,
+    @SerializedName("html_url")
+    val htmlUrl: String,
+    @SerializedName("id")
+    val id: Int,
+    @SerializedName("login")
+    val login: String,
+    @SerializedName("node_id")
+    val nodeId: String,
+    @SerializedName("organizations_url")
+    val organizationsUrl: String,
     @SerializedName("received_events_url")
-    @Expose
-    var receivedEventsUrl: String? = null
-
-    @SerializedName("type")
-    @Expose
-    var type: String? = null
-
+    val receivedEventsUrl: String,
+    @SerializedName("repos_url")
+    val reposUrl: String,
     @SerializedName("site_admin")
-    @Expose
-    var siteAdmin: Boolean? = null
-
-}
+    val siteAdmin: Boolean,
+    @SerializedName("starred_url")
+    val starredUrl: String,
+    @SerializedName("subscriptions_url")
+    val subscriptionsUrl: String,
+    @SerializedName("type")
+    val type: String,
+    @SerializedName("url")
+    val url: String
+)
