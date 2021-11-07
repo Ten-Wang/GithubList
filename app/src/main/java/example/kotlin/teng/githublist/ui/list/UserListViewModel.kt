@@ -1,21 +1,22 @@
 package example.kotlin.teng.githublist.ui.list
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import example.kotlin.teng.githublist.resource.network.UserListItem
-import example.kotlin.teng.githublist.resource.repository.GithubRepo
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import example.kotlin.teng.githublist.resource.network.UserItem
+import example.kotlin.teng.githublist.resource.network.api_interface.GithubService
+import example.kotlin.teng.githublist.resource.repository.UserListPagingDataSource
+import kotlinx.coroutines.flow.Flow
 
-class UserListViewModel(private val appRepo: GithubRepo) : ViewModel() {
+class UserListViewModel(private val service: GithubService) :
+    ViewModel() {
 
-    val userList = MutableLiveData<UserListItem>()
-    fun getUserList(since: Int, perPage: Int) = viewModelScope.launch {
-        appRepo.getUserList(since, perPage).collect { it ->
-            it.data.let {
-                userList.value = it
-            }
-        }
+    val userListPaging: Flow<PagingData<UserItem>> = getUserListStream()
+
+    private fun getUserListStream(): Flow<PagingData<UserItem>> {
+        return Pager(PagingConfig(20)) {
+            UserListPagingDataSource(service)
+        }.flow
     }
 }
