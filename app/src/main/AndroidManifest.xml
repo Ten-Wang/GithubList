@@ -24,10 +24,5 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name="example.kotlin.teng.githublist.ui.detail.DetailActivity"
-            android:theme="@style/AppThemeNoActionBar"
-            android:exported="false"/>
     </application>
 </manifest>

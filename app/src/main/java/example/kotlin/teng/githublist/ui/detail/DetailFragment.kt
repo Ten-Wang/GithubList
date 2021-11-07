@@ -3,28 +3,41 @@ package example.kotlin.teng.githublist.ui.detail
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.util.Linkify
+import android.view.LayoutInflater
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
+import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import example.kotlin.teng.githublist.R
 import example.kotlin.teng.githublist.databinding.ActivityUsersDetailBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class DetailActivity : AppCompatActivity() {
+class DetailFragment : BottomSheetDialogFragment() {
 
     private val detailViewModel: DetailViewModel by viewModel()
     private lateinit var binding: ActivityUsersDetailBinding
 
+    companion object {
+        fun newInstance(login: String): DetailFragment {
+            val args = Bundle()
+            args.putString("login", login)
+            val fragment = DetailFragment()
+            fragment.arguments = args
+            return fragment
+        }
+    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-
-        super.onCreate(savedInstanceState)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = ActivityUsersDetailBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        detailViewModel.userDetail.observe(this) {
+        detailViewModel.userDetail.observe(viewLifecycleOwner) {
             binding.apply {
                 if (it != null) {
                     tvName.text = it.name
@@ -37,7 +50,7 @@ class DetailActivity : AppCompatActivity() {
                     icBadge.visibility =
                         if (it.siteAdmin != null) View.VISIBLE else View.GONE
 
-                    Glide.with(applicationContext)
+                    Glide.with(root.context)
                         .load(it.avatarUrl)
                         .listener(object : RequestListener<Drawable> {
                             override fun onLoadFailed(
@@ -66,12 +79,27 @@ class DetailActivity : AppCompatActivity() {
 
         binding.apply {
             tvBlog.autoLinkMask = Linkify.ALL
-            btnClose.setOnClickListener { finish() }
+            btnClose.setOnClickListener { closeFragment() }
         }
 
-        val login = intent.getStringExtra("login")
-        if (login != null) {
-            detailViewModel.getUserDetail(login)
+        requireArguments().getString("login")?.apply {
+            detailViewModel.getUserDetail(this)
         }
+
+        return binding.root
     }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+//        setStyle(STYLE_NORMAL, R.style.DetailBottomSheetStyle)
+    }
+
+    private fun closeFragment() {
+        val manager = parentFragmentManager
+        val trans = manager.beginTransaction()
+        trans.remove(this)
+        trans.commit()
+        manager.popBackStack()
+    }
+
 }
