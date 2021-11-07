@@ -10,65 +10,68 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import example.kotlin.teng.githublist.databinding.UsersDetailActivityBinding
+import example.kotlin.teng.githublist.databinding.ActivityUsersDetailBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailActivity : AppCompatActivity() {
 
     private val detailViewModel: DetailViewModel by viewModel()
-    private lateinit var binding: UsersDetailActivityBinding
+    private lateinit var binding: ActivityUsersDetailBinding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        binding = UsersDetailActivityBinding.inflate(layoutInflater)
+        binding = ActivityUsersDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         detailViewModel.userDetail.observe(this) {
-            if (it != null) {
-                binding.tvName.text = it.name
-                if (it.bio != null) {
-                    binding.textViewBio.text = it.bio.toString()
+            binding.apply {
+                if (it != null) {
+                    tvName.text = it.name
+                    if (it.bio != null) {
+                        tvBio.text = it.bio.toString()
+                    }
+                    tvLogin.text = it.login
+                    tvLocation.text = it.location
+                    tvBlog.text = it.blog
+                    icBadge.visibility =
+                        if (it.siteAdmin != null) View.VISIBLE else View.GONE
+
+                    Glide.with(applicationContext)
+                        .load(it.avatarUrl)
+                        .listener(object : RequestListener<Drawable> {
+                            override fun onLoadFailed(
+                                e: GlideException?, model: Any,
+                                target: Target<Drawable>, isFirstResource: Boolean
+                            ): Boolean {
+                                progressBar.visibility = View.GONE
+                                return false
+                            }
+
+                            override fun onResourceReady(
+                                resource: Drawable,
+                                model: Any,
+                                target: Target<Drawable>,
+                                dataSource: DataSource,
+                                isFirstResource: Boolean
+                            ): Boolean {
+                                progressBar.visibility = View.GONE
+                                return false
+                            }
+                        })
+                        .into(imgAvatarUrl)
                 }
-                binding.tvLogin.text = it.login
-                binding.tvLocation.text = it.location
-                binding.tvBlog.text = it.blog
-                binding.viewBadge.visibility =
-                    if (it.siteAdmin != null) View.VISIBLE else View.GONE
-
-                Glide.with(applicationContext)
-                    .load(it.avatarUrl)
-                    .listener(object : RequestListener<Drawable> {
-                        override fun onLoadFailed(
-                            e: GlideException?, model: Any,
-                            target: Target<Drawable>, isFirstResource: Boolean
-                        ): Boolean {
-                            binding.progressBar.visibility = View.GONE
-                            return false
-                        }
-
-                        override fun onResourceReady(
-                            resource: Drawable,
-                            model: Any,
-                            target: Target<Drawable>,
-                            dataSource: DataSource,
-                            isFirstResource: Boolean
-                        ): Boolean {
-                            binding.progressBar.visibility = View.GONE
-                            return false
-                        }
-                    })
-                    .into(binding.imgAvatarUrl)
             }
         }
 
-        binding.tvBlog.autoLinkMask = Linkify.ALL
+        binding.apply {
+            tvBlog.autoLinkMask = Linkify.ALL
+            btnClose.setOnClickListener { finish() }
+        }
 
         val login = intent.getStringExtra("login")
         if (login != null) {
             detailViewModel.getUserDetail(login)
         }
-
-        binding.btnClose.setOnClickListener { finish() }
     }
 }

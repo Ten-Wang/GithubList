@@ -6,7 +6,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import example.kotlin.teng.githublist.resource.network.UserItem
 import example.kotlin.teng.githublist.resource.network.api_interface.GithubService
-import example.kotlin.teng.githublist.resource.repository.UserListPagingDataSource
+import example.kotlin.teng.githublist.resource.repository.UsersPagingDataSource
 import kotlinx.coroutines.flow.Flow
 
 class UserListViewModel(private val service: GithubService) :
@@ -16,7 +16,7 @@ class UserListViewModel(private val service: GithubService) :
 
     private fun getUserListStream(): Flow<PagingData<UserItem>> {
         return Pager(PagingConfig(20)) {
-            UserListPagingDataSource(service)
+            UsersPagingDataSource(service)
         }.flow
     }
 }

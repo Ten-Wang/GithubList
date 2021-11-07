@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
 class GithubRepo(private val service: GithubService) : BaseApiResponse() {
-    suspend fun getUserDetail(login: String): Flow<NetworkResult<UserDetailItem>> {
+    suspend fun getUserDetail(login: String): Flow<NetworkResult<UserDetailResponse>> {
         return flow {
             emit(safeApiCall { service.getUser(login) })
         }.flowOn(Dispatchers.IO)

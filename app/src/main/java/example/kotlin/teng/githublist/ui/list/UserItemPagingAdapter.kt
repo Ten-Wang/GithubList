@@ -16,7 +16,7 @@ import example.kotlin.teng.githublist.databinding.ItemUserListBinding
 import example.kotlin.teng.githublist.resource.network.UserItem
 
 class UserItemPagingAdapter : PagingDataAdapter<UserItem, UserItemPagingAdapter.UserViewHolder>(
-    MovieModelComparator
+    UserComparator
 ) {
     var userItemClickListener: UserItemClickListener? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserItemPagingAdapter.UserViewHolder {
@@ -39,7 +39,7 @@ class UserItemPagingAdapter : PagingDataAdapter<UserItem, UserItemPagingAdapter.
 
         fun bind(item: UserItem) = with(binding) {
             tvLogin.text = item.login
-            viewBadge.visibility =
+            icBadge.visibility =
                 when (item.siteAdmin) {
                     true -> View.VISIBLE
                     false -> View.GONE
@@ -79,7 +79,7 @@ class UserItemPagingAdapter : PagingDataAdapter<UserItem, UserItemPagingAdapter.
     }
 
     companion object {
-        private val MovieModelComparator = object : DiffUtil.ItemCallback<UserItem>() {
+        private val UserComparator = object : DiffUtil.ItemCallback<UserItem>() {
             override fun areItemsTheSame(oldItem: UserItem, newItem: UserItem): Boolean {
                 return (oldItem.id == newItem.id)
             }

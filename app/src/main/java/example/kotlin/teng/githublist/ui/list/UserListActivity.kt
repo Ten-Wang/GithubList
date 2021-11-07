@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import example.kotlin.teng.githublist.databinding.UserListActivityBinding
+import example.kotlin.teng.githublist.databinding.ActivityUserListBinding
 import example.kotlin.teng.githublist.resource.network.UserItem
 import example.kotlin.teng.githublist.ui.detail.DetailActivity
 import kotlinx.coroutines.flow.collectLatest
@@ -15,24 +15,16 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class UserListActivity : AppCompatActivity(), UserItemPagingAdapter.UserItemClickListener {
 
-    private val viewModel: UserListViewModel by viewModel()
-    private lateinit var binding: UserListActivityBinding
-
+    private lateinit var binding: ActivityUserListBinding
+    private val listViewModel: UserListViewModel by viewModel()
     private val userItemPagingAdapter: UserItemPagingAdapter by lazy {
         UserItemPagingAdapter()
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = UserListActivityBinding.inflate(layoutInflater)
+        binding = ActivityUserListBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        lifecycleScope.launch {
-            viewModel.userListPaging.collectLatest {
-                userItemPagingAdapter.submitData(it)
-            }
-        }
 
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(applicationContext)
@@ -41,6 +33,12 @@ class UserListActivity : AppCompatActivity(), UserItemPagingAdapter.UserItemClic
                 (binding.recyclerView.layoutManager as LinearLayoutManager).orientation))
             adapter = userItemPagingAdapter
             userItemPagingAdapter.userItemClickListener = this@UserListActivity
+        }
+
+        lifecycleScope.launch {
+            listViewModel.userListPaging.collectLatest {
+                userItemPagingAdapter.submitData(it)
+            }
         }
     }
 

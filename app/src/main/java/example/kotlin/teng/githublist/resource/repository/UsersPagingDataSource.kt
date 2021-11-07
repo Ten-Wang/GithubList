@@ -5,13 +5,13 @@ import androidx.paging.PagingState
 import example.kotlin.teng.githublist.resource.network.UserItem
 import example.kotlin.teng.githublist.resource.network.api_interface.GithubService
 
-class UserListPagingDataSource(
+class UsersPagingDataSource(
     private val service: GithubService) :
     PagingSource<Int, UserItem>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, UserItem> {
         val pageNumber = params.key ?: 0
         return try {
-            val response = service.getPagerUsers(pageNumber, 20)
+            val response = service.getUsers(pageNumber, 20)
             val pagedResponse = response.body()
 
             LoadResult.Page(

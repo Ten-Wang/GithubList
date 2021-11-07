@@ -3,7 +3,7 @@ package example.kotlin.teng.githublist.resource.network
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class UserDetailItem {
+class UserDetailResponse {
 
     @SerializedName("login")
     @Expose

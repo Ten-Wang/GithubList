@@ -1,7 +1,7 @@
 package example.kotlin.teng.githublist.resource.network.api_interface
 
-import example.kotlin.teng.githublist.resource.network.UserDetailItem
-import example.kotlin.teng.githublist.resource.network.UserListItem
+import example.kotlin.teng.githublist.resource.network.UserDetailResponse
+import example.kotlin.teng.githublist.resource.network.UsersResponse
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.http.GET
@@ -9,30 +9,30 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface GithubService {
-    suspend fun getPagerUsers(since: Int,perPage: Int): Response<UserListItem>
-    suspend fun getUser(userId: String): Response<UserDetailItem>
+    suspend fun getUsers(since: Int, perPage: Int): Response<UsersResponse>
+    suspend fun getUser(userId: String): Response<UserDetailResponse>
 
     class Network(
         private val retrofit: Retrofit,
     ) : GithubService {
 
-        override suspend fun getPagerUsers(since: Int,perPage: Int): Response<UserListItem> {
-            return retrofit.create(NetworkCalls::class.java).getPagerUsers(since,perPage)
+        override suspend fun getUsers(since: Int, perPage: Int): Response<UsersResponse> {
+            return retrofit.create(NetworkCalls::class.java).getUsers(since,perPage)
         }
 
-        override suspend fun getUser(userId: String):Response<UserDetailItem> {
+        override suspend fun getUser(userId: String):Response<UserDetailResponse> {
             return retrofit.create(NetworkCalls::class.java).getUser(userId)
         }
 
         interface NetworkCalls {
             @GET("/users")
-            suspend fun getPagerUsers(
+            suspend fun getUsers(
                 @Query("since") since: Int,
                 @Query("per_page") perPage: Int
-            ): Response<UserListItem>
+            ): Response<UsersResponse>
 
             @GET("/users/{user_id}")
-            suspend fun getUser(@Path("user_id") userId: String): Response<UserDetailItem>
+            suspend fun getUser(@Path("user_id") userId: String): Response<UserDetailResponse>
         }
     }
 }
