@@ -1,5 +1,6 @@
-package example.kotlin.teng.githublist.resource.network
+package example.kotlin.teng.githublist.resource.network.response
 
+import example.kotlin.teng.githublist.resource.network.NetworkResult
 import retrofit2.Response
 
 abstract class BaseApiResponse {

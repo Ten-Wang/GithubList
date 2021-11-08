@@ -13,7 +13,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import example.kotlin.teng.githublist.databinding.ItemUserListBinding
-import example.kotlin.teng.githublist.resource.network.UserItem
+import example.kotlin.teng.githublist.resource.network.response.UserItem
 
 class UserItemPagingAdapter : PagingDataAdapter<UserItem, UserItemPagingAdapter.UserViewHolder>(
     UserComparator

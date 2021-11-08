@@ -22,9 +22,10 @@ class DetailFragment : BottomSheetDialogFragment() {
     private lateinit var binding: ActivityUsersDetailBinding
 
     companion object {
+        const val tagStr = "login"
         fun newInstance(login: String): DetailFragment {
             val args = Bundle()
-            args.putString("login", login)
+            args.putString(tagStr, login)
             val fragment = DetailFragment()
             fragment.arguments = args
             return fragment
@@ -82,16 +83,11 @@ class DetailFragment : BottomSheetDialogFragment() {
             btnClose.setOnClickListener { closeFragment() }
         }
 
-        requireArguments().getString("login")?.apply {
+        requireArguments().getString(tagStr)?.apply {
             detailViewModel.getUserDetail(this)
         }
 
         return binding.root
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-//        setStyle(STYLE_NORMAL, R.style.DetailBottomSheetStyle)
     }
 
     private fun closeFragment() {

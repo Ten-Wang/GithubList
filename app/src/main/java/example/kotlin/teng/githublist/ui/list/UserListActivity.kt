@@ -6,8 +6,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import example.kotlin.teng.githublist.databinding.ActivityUserListBinding
-import example.kotlin.teng.githublist.resource.network.UserItem
+import example.kotlin.teng.githublist.resource.network.response.UserItem
 import example.kotlin.teng.githublist.ui.detail.DetailFragment
+import example.kotlin.teng.githublist.ui.detail.DetailFragment.Companion.tagStr
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -43,10 +44,6 @@ class UserListActivity : AppCompatActivity(), UserItemPagingAdapter.UserItemClic
 
     override fun onUserItemClicked(userItem: UserItem) {
         DetailFragment.newInstance(userItem.login)
-            .show(supportFragmentManager, "login")
-//        startActivity(
-//            Intent(this, DetailActivity::class.java)
-//                .putExtra("login", userItem.login)
-//        )
+            .show(supportFragmentManager, tagStr)
     }
 }

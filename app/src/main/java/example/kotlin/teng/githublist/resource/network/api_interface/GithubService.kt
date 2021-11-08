@@ -1,7 +1,7 @@
 package example.kotlin.teng.githublist.resource.network.api_interface
 
-import example.kotlin.teng.githublist.resource.network.UserDetailResponse
-import example.kotlin.teng.githublist.resource.network.UsersResponse
+import example.kotlin.teng.githublist.resource.network.response.UserDetailResponse
+import example.kotlin.teng.githublist.resource.network.response.UsersResponse
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.http.GET

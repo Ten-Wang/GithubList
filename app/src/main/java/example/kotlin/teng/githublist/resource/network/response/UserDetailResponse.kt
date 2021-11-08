@@ -1,4 +1,4 @@
-package example.kotlin.teng.githublist.resource.network
+package example.kotlin.teng.githublist.resource.network.response
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

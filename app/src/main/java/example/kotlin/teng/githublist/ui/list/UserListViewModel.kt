@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import example.kotlin.teng.githublist.resource.network.UserItem
+import example.kotlin.teng.githublist.resource.network.response.UserItem
 import example.kotlin.teng.githublist.resource.network.api_interface.GithubService
 import example.kotlin.teng.githublist.resource.repository.UsersPagingDataSource
 import kotlinx.coroutines.flow.Flow
