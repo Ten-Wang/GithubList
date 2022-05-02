@@ -8,9 +8,11 @@ import example.kotlin.teng.githublist.resource.network.response.UserItem
 import example.kotlin.teng.githublist.resource.network.api_interface.GithubService
 import example.kotlin.teng.githublist.resource.repository.UsersPagingDataSource
 import kotlinx.coroutines.flow.Flow
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class UserListViewModel(private val service: GithubService) :
-    ViewModel() {
+class UserListViewModel : ViewModel(), KoinComponent {
+    private val service: GithubService by inject()
 
     val userListPaging: Flow<PagingData<UserItem>> = getUserListStream()
 

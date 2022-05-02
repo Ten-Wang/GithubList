@@ -5,11 +5,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import example.kotlin.teng.githublist.resource.network.response.UserDetailResponse
 import example.kotlin.teng.githublist.resource.repository.GithubRepo
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class DetailViewModel(private val appRepo: GithubRepo) : ViewModel() {
+class DetailViewModel : ViewModel(), KoinComponent {
 
+    private val appRepo: GithubRepo by inject()
     val userDetail = MutableLiveData<UserDetailResponse>()
 
     fun getUserDetail(login: String) = viewModelScope.launch {

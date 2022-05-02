@@ -3,6 +3,7 @@ package example.kotlin.teng.githublist.di
 import example.kotlin.teng.githublist.BuildConfig
 import example.kotlin.teng.githublist.resource.network.api_interface.GithubService
 import example.kotlin.teng.githublist.resource.repository.GithubRepo
+import example.kotlin.teng.githublist.resource.utils.Constants.GithubBase
 import example.kotlin.teng.githublist.ui.detail.DetailViewModel
 import example.kotlin.teng.githublist.ui.list.UserListViewModel
 import okhttp3.OkHttpClient
@@ -17,10 +18,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 val viewModelModule by lazy {
     module {
         viewModel {
-            UserListViewModel(get())
+            UserListViewModel()
         }
         viewModel {
-            DetailViewModel(get())
+            DetailViewModel()
         }
     }
 }
@@ -36,9 +37,9 @@ val repositoryModule by lazy {
 val serviceModule by lazy {
     module {
         single<GithubService> {
-            GithubService.Network(get(named("GithubBase")))
+            GithubService.Network(get(named(GithubBase)))
         }
-        single<Retrofit>(named("GithubBase")){
+        single<Retrofit>(named(GithubBase)){
             val baseUrl = BuildConfig.GITHUTAPI_URI
             Retrofit.Builder()
                 .baseUrl(baseUrl)

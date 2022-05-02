@@ -14,6 +14,7 @@ import com.bumptech.glide.request.target.Target
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import example.kotlin.teng.githublist.R
 import example.kotlin.teng.githublist.databinding.ActivityUsersDetailBinding
+import example.kotlin.teng.githublist.resource.utils.Constants.BUNDLE_STR
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailFragment : BottomSheetDialogFragment() {
@@ -22,10 +23,9 @@ class DetailFragment : BottomSheetDialogFragment() {
     private lateinit var binding: ActivityUsersDetailBinding
 
     companion object {
-        const val tagStr = "login"
         fun newInstance(login: String): DetailFragment {
             val args = Bundle()
-            args.putString(tagStr, login)
+            args.putString(BUNDLE_STR, login)
             val fragment = DetailFragment()
             fragment.arguments = args
             return fragment
@@ -83,7 +83,7 @@ class DetailFragment : BottomSheetDialogFragment() {
             btnClose.setOnClickListener { closeFragment() }
         }
 
-        requireArguments().getString(tagStr)?.apply {
+        requireArguments().getString(BUNDLE_STR)?.apply {
             detailViewModel.getUserDetail(this)
         }
 

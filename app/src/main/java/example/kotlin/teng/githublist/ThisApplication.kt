@@ -18,8 +18,6 @@ class ThisApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         startKoin {
-            // Koin Android logger
-            androidLogger()
             // inject Android context
             androidContext(this@ThisApplication)
             // use modules

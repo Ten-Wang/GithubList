@@ -2,18 +2,18 @@ package example.kotlin.teng.githublist.ui.list
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import example.kotlin.teng.githublist.databinding.ActivityUserListBinding
 import example.kotlin.teng.githublist.resource.network.response.UserItem
+import example.kotlin.teng.githublist.resource.utils.Constants
 import example.kotlin.teng.githublist.ui.detail.DetailFragment
-import example.kotlin.teng.githublist.ui.detail.DetailFragment.Companion.tagStr
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class UserListActivity : AppCompatActivity(), UserItemPagingAdapter.UserItemClickListener {
+class UserListActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityUserListBinding
     private val listViewModel: UserListViewModel by viewModel()
@@ -27,23 +27,28 @@ class UserListActivity : AppCompatActivity(), UserItemPagingAdapter.UserItemClic
         setContentView(binding.root)
 
         binding.recyclerView.apply {
-            layoutManager = LinearLayoutManager(applicationContext)
-            this.addItemDecoration( DividerItemDecoration(
-                applicationContext,
-                (binding.recyclerView.layoutManager as LinearLayoutManager).orientation))
+            layoutManager = LinearLayoutManager(this@UserListActivity)
+            this.addItemDecoration(
+                DividerItemDecoration(
+                    this@UserListActivity,
+                    (layoutManager as LinearLayoutManager).orientation
+                )
+            )
+            userItemPagingAdapter.userItemClickListener = object :
+                UserItemPagingAdapter.UserItemClickListener {
+                override fun onUserItemClicked(userItem: UserItem) {
+                    DetailFragment.newInstance(userItem.login)
+                        .show(supportFragmentManager, Constants.BUNDLE_STR)
+                }
+
+            }
             adapter = userItemPagingAdapter
-            userItemPagingAdapter.userItemClickListener = this@UserListActivity
         }
 
-        lifecycleScope.launch {
+        MainScope().launch {
             listViewModel.userListPaging.collectLatest {
                 userItemPagingAdapter.submitData(it)
             }
         }
-    }
-
-    override fun onUserItemClicked(userItem: UserItem) {
-        DetailFragment.newInstance(userItem.login)
-            .show(supportFragmentManager, tagStr)
     }
 }

@@ -43,7 +43,6 @@ class UserItemPagingAdapter : PagingDataAdapter<UserItem, UserItemPagingAdapter.
                 when (item.siteAdmin) {
                     true -> View.VISIBLE
                     false -> View.GONE
-                    null -> View.GONE
                 }
 
             Glide.with(root.context)
